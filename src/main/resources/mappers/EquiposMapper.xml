@@ -44,6 +44,7 @@
         <id property='serial' column='serial'/>
         <result property='nombre' column='nombre'/>
         <result property='placa' column='placa'/>
+        <result property='vidaInicial' column='vidaInicial'/>
         <result property='marca' column='marca'/>
         <result property='descripcion' column='descripcion'/>
         <result property='estado' column='estado'/>
@@ -100,7 +101,7 @@
     </select>
     
     <select id='loadEquipoBySerial' parameterType='map' resultMap='EquipoResult'>
-        SELECT eq.serial,eq.nombre,eq.placa,eq.marca,eq.descripcion,eq.estado,eq.subestados as subEstado,eq.proveedor,
+        SELECT eq.serial,eq.nombre,eq.placa,eq.vidaInicial,eq.marca,eq.descripcion,eq.estado,eq.subestados as subEstado,eq.proveedor,
                pre.USUARIOS_id as pre_usuario_id,pre.fechaExpedicion as pre_fechaExpedicion,pre.fechaVencimiento as pre_fechaVencimiento,pre.tipoPrestamo as pre_tipoPrestamo
         FROM EQUIPOS as eq
                      left join PRESTAMOS as pre on eq.serial=pre.EQUIPOS_serial
@@ -139,7 +140,7 @@
     </select>
     
     <insert id='registrarEquipoNuevo'>
-        INSERT into EQUIPOS(serial,nombre,placa,marca,descripcion,estado,subestados,proveedor,Modelos_nombre) values (#{equipo.serial},#{equipo.nombre},#{equipo.placa},#{equipo.marca},#{equipo.descripcion},#{equipo.estado},#{equipo.subEstado},#{equipo.proveedor},#{modelo});
+        INSERT into EQUIPOS(serial,nombre,placa,vidaInicial,marca,descripcion,estado,subestados,proveedor,Modelos_nombre) values (#{equipo.serial},#{equipo.nombre},#{equipo.placa},#{equipo.vidaInicial},#{equipo.marca},#{equipo.descripcion},#{equipo.estado},#{equipo.subEstado},#{equipo.proveedor},#{modelo});
     </insert>
     
     <insert id='registrarModeloNuevo'>

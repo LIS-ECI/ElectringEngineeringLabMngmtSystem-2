@@ -86,8 +86,8 @@ public class RegistroEquipoTest {
         Connection conn=getConnection();
         Statement stmt=conn.createStatement();       
         stmt.execute("INSERT INTO MODELOS (nombre,clase,vidaUtil,valor,seguro,foto) values ('modelo1','abcd',100,200000,true,null)");              
-        stmt.execute("INSERT INTO EQUIPOS (serial,nombre,placa,marca,descripcion,estado,subestados,proveedor,Modelos_nombre) VALUES (456,'MultiTest',789,'La Ultima','tamano y altura promedio con buena calidad','activo','prestamo diario','Jhordy Salinas','modelo1')");
-        stmt.execute("INSERT INTO EQUIPOS (serial,nombre,placa,marca,descripcion,estado,subestados,proveedor,Modelos_nombre) VALUES (567,'MultiTest',245,'La Ultima','tamano y altura promedio con buena calidad','activo','prestamo diario','Jhordy Salinas','modelo1')");        
+        stmt.execute("INSERT INTO EQUIPOS (serial,nombre,placa,vidaInicial,marca,descripcion,estado,subestados,proveedor,Modelos_nombre) VALUES (456,'MultiTest',789,0,'La Ultima','tamano y altura promedio con buena calidad','activo','prestamo diario','Jhordy Salinas','modelo1')");
+        stmt.execute("INSERT INTO EQUIPOS (serial,nombre,placa,vidaInicial,marca,descripcion,estado,subestados,proveedor,Modelos_nombre) VALUES (567,'MultiTest',245,0,'La Ultima','tamano y altura promedio con buena calidad','activo','prestamo diario','Jhordy Salinas','modelo1')");        
         conn.commit();
         conn.close();
         //Realizar la operacion de la logica
@@ -95,8 +95,8 @@ public class RegistroEquipoTest {
         ////respuesta esperada
         Modelo ans = new Modelo("modelo1","abcd",100,200000,true,null);
         Set<Equipo> equipo_ans=new LinkedHashSet<>();
-        equipo_ans.add(new Equipo(456,"MultiTest",789,"La Ultima","tamano y altura promedio con buena calidad","activo","prestamo diario","Jhordy Salinas"));
-        equipo_ans.add(new Equipo(567,"MultiTest",245,"La Ultima","tamano y altura promedio con buena calidad","activo","prestamo diario","Jhordy Salinas"));
+        equipo_ans.add(new Equipo(456,"MultiTest",789,0,"La Ultima","tamano y altura promedio con buena calidad","activo","prestamo diario","Jhordy Salinas"));
+        equipo_ans.add(new Equipo(567,"MultiTest",245,0,"La Ultima","tamano y altura promedio con buena calidad","activo","prestamo diario","Jhordy Salinas"));
         ans.setEquipos(equipo_ans);        
         ////respuesta obtenida
         Modelo Jhordy = servicios.loadModeloByName("modelo1");
@@ -111,13 +111,13 @@ public class RegistroEquipoTest {
         Connection conn=getConnection();
         Statement stmt=conn.createStatement();       
         stmt.execute("INSERT INTO MODELOS (nombre,clase,vidaUtil,valor,seguro,foto) values ('modelo1','abcd',100,200000,true,null)");              
-        stmt.execute("INSERT INTO EQUIPOS (serial,nombre,placa,marca,descripcion,estado,subestados,proveedor,Modelos_nombre) VALUES (456,'MultiTest',789,'La Ultima','tamano y altura promedio con buena calidad','activo','prestamo diario','Jhordy Salinas','modelo1')");
+        stmt.execute("INSERT INTO EQUIPOS (serial,nombre,placa,vidaInicial,marca,descripcion,estado,subestados,proveedor,Modelos_nombre) VALUES (456,'MultiTest',789,0,'La Ultima','tamano y altura promedio con buena calidad','activo','prestamo diario','Jhordy Salinas','modelo1')");
         conn.commit();
         conn.close();
         //Realizar la operacion de la logica
         Services servicios = Services.getInstance("h2-applicationconfig.properties");
         ////respuesta esperada
-        Equipo ans = new Equipo(456,"MultiTest",789,"La Ultima","tamano y altura promedio con buena calidad","activo","prestamo diario","Jhordy Salinas");
+        Equipo ans = new Equipo(456,"MultiTest",789,0,"La Ultima","tamano y altura promedio con buena calidad","activo","prestamo diario","Jhordy Salinas");
         ////respuesta obtenida
         Equipo Jhordy = servicios.loadEquipoBySerial(456);
         //prueba
@@ -131,7 +131,7 @@ public class RegistroEquipoTest {
         Connection conn=getConnection();
         Statement stmt=conn.createStatement();       
         stmt.execute("INSERT INTO MODELOS (nombre,clase,vidaUtil,valor,seguro,foto) values ('modelo1','abcd',100,200000,true,null)");              
-        stmt.execute("INSERT INTO EQUIPOS (serial,nombre,placa,marca,descripcion,estado,subestados,proveedor,Modelos_nombre) VALUES (456,'MultiTest',789,'La Ultima','tamano y altura promedio con buena calidad','activo','prestamo diario','Jhordy Salinas','modelo1')");
+        stmt.execute("INSERT INTO EQUIPOS (serial,nombre,placa,vidaInicial,marca,descripcion,estado,subestados,proveedor,Modelos_nombre) VALUES (456,'MultiTest',789,0,'La Ultima','tamano y altura promedio con buena calidad','activo','prestamo diario','Jhordy Salinas','modelo1')");
         stmt.execute("INSERT INTO USUARIOS (id,nombre,correo,contrasena) VALUES (123,'PEDRO PEREZ','pedro.perez@mail.escuelaing.edu.co','1test1')");
         stmt.execute("INSERT INTO USUARIOS (id,nombre,correo,contrasena) VALUES (124,'PEDRO PEREZ','pedro.perez@mail.escuelaing.edu.co','1test1')");              
         stmt.execute("INSERT INTO PRESTAMOS (USUARIOS_id,EQUIPOS_serial,fechaExpedicion,fechaVencimiento,tipoPrestamo) VALUES (124,456,'2015-01-01 00:00:00',null,'prestamo semestral')");
@@ -141,7 +141,7 @@ public class RegistroEquipoTest {
         //Realizar la operacion de la logica
         Services servicios = Services.getInstance("h2-applicationconfig.properties");
         ////respuesta esperada
-        Equipo ans = new Equipo(456,"MultiTest",789,"La Ultima","tamano y altura promedio con buena calidad","activo","prestamo diario","Jhordy Salinas");
+        Equipo ans = new Equipo(456,"MultiTest",789,0,"La Ultima","tamano y altura promedio con buena calidad","activo","prestamo diario","Jhordy Salinas");
         Set<PrestamoEquipo> prestamo_ans=new LinkedHashSet<>();
         prestamo_ans.add(new PrestamoEquipo(124,java.sql.Date.valueOf("2015-01-01"),null,"prestamo semestral"));
         prestamo_ans.add(new PrestamoEquipo(123,java.sql.Date.valueOf("2015-01-01"),null,"prestamo diario"));

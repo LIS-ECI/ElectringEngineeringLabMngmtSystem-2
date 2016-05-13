@@ -97,8 +97,8 @@ public class RegistroDevolucionTest {
         stmt.execute("INSERT INTO ROLES_USUARIOS(USUARIOS_id,ROLES_rol) values (124,'estudiante')");        
         stmt.execute("INSERT INTO ROLES_USUARIOS(USUARIOS_id,ROLES_rol) values (124,'laboratorista')");
         stmt.execute("INSERT INTO MODELOS (nombre,clase,vidaUtil,valor,seguro,foto) values ('modelo1','abcd',100,200000,true,null)");              
-        stmt.execute("INSERT INTO EQUIPOS (serial,nombre,placa,marca,descripcion,estado,subestados,proveedor,Modelos_nombre) VALUES (456,'MultiTest',789,'La Ultima','tamano y altura promedio con buena calidad','activo','prestamo diario','Jhordy Salinas','modelo1')");
-        stmt.execute("INSERT INTO EQUIPOS (serial,nombre,placa,marca,descripcion,estado,subestados,proveedor,Modelos_nombre) VALUES (567,'MultiTest',245,'La Ultima','tamano y altura promedio con buena calidad','activo','prestamo diario','Jhordy Salinas','modelo1')");
+        stmt.execute("INSERT INTO EQUIPOS (serial,nombre,placa,vidaInicial,marca,descripcion,estado,subestados,proveedor,Modelos_nombre) VALUES (456,'MultiTest',789,0,'La Ultima','tamano y altura promedio con buena calidad','activo','prestamo diario','Jhordy Salinas','modelo1')");
+        stmt.execute("INSERT INTO EQUIPOS (serial,nombre,placa,vidaInicial,marca,descripcion,estado,subestados,proveedor,Modelos_nombre) VALUES (567,'MultiTest',245,0,'La Ultima','tamano y altura promedio con buena calidad','activo','prestamo diario','Jhordy Salinas','modelo1')");
         stmt.execute("INSERT INTO PRESTAMOS (USUARIOS_id,EQUIPOS_serial,fechaExpedicion,fechaVencimiento,tipoPrestamo) VALUES (124,567,'2015-01-01 00:00:00',null,'prestamo diario')");
         stmt.execute("INSERT INTO PRESTAMOS (USUARIOS_id,EQUIPOS_serial,fechaExpedicion,fechaVencimiento,tipoPrestamo) VALUES (124,456,'2015-01-01 00:00:00',null,'prestamo diario')");
         conn.commit();
@@ -173,8 +173,8 @@ public class RegistroDevolucionTest {
         stmt.execute("INSERT INTO ROLES_USUARIOS(USUARIOS_id,ROLES_rol) values (124,'laboratorista')");
         stmt.execute("INSERT INTO ROLES_USUARIOS(USUARIOS_id,ROLES_rol) values (124,'administrador')");
         stmt.execute("INSERT INTO MODELOS (nombre,clase,vidaUtil,valor,seguro,foto) values ('modelo1','abcd',100,200000,true,null)");              
-        stmt.execute("INSERT INTO EQUIPOS (serial,nombre,placa,marca,descripcion,estado,subestados,proveedor,Modelos_nombre) VALUES (456,'MultiTest',789,'La Ultima','tamano y altura promedio con buena calidad','activo','prestamo diario','Jhordy Salinas','modelo1')");
-        stmt.execute("INSERT INTO EQUIPOS (serial,nombre,placa,marca,descripcion,estado,subestados,proveedor,Modelos_nombre) VALUES (567,'MultiTest',245,'La Ultima','tamano y altura promedio con buena calidad','activo','prestamo diario','Jhordy Salinas','modelo1')");
+        stmt.execute("INSERT INTO EQUIPOS (serial,nombre,placa,vidaInicial,marca,descripcion,estado,subestados,proveedor,Modelos_nombre) VALUES (456,'MultiTest',789,0,'La Ultima','tamano y altura promedio con buena calidad','activo','prestamo diario','Jhordy Salinas','modelo1')");
+        stmt.execute("INSERT INTO EQUIPOS (serial,nombre,placa,vidaInicial,marca,descripcion,estado,subestados,proveedor,Modelos_nombre) VALUES (567,'MultiTest',245,0,'La Ultima','tamano y altura promedio con buena calidad','activo','prestamo diario','Jhordy Salinas','modelo1')");
         stmt.execute("INSERT INTO EQUIPOS_BASICOS (nombre,valor,foto,descripcion,cantidad) VALUES ('cables','5000',null,'un metro de longitud y 0.5 centimetros de diametro',500)");      
         stmt.execute("INSERT INTO EQUIPOS_BASICOS (nombre,valor,foto,descripcion,cantidad) VALUES ('antenas','3000',null,'un metro de long',300)");      
         stmt.execute("INSERT INTO PRESTAMOS (USUARIOS_id,EQUIPOS_serial,fechaExpedicion,fechaVencimiento,tipoPrestamo) VALUES (124,567,'2015-01-01 00:00:00',null,'prestamo diario')");

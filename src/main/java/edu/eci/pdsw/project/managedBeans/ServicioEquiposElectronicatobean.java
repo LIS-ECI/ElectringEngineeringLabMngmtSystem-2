@@ -124,6 +124,7 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     private int serialEquipo;
     private String nombreEquipo;
     private int placaEquipo;
+    private int vidaInicial;
     private String marcaEquipo;
     private String descripcionEquipo;
     private String estadoEquipo="Activo";
@@ -151,6 +152,7 @@ public class ServicioEquiposElectronicatobean implements Serializable{
         elModeloYaExiste=false;
         textoSalidaModelo=null;
         yaBusqueModelo=false;
+        vidaInicial=0;
         elModeloNoExiste=false;
         //datos para un modelo nuevo
         claseModelo=null;
@@ -162,6 +164,7 @@ public class ServicioEquiposElectronicatobean implements Serializable{
         serialEquipo=0;
         nombreEquipo=null;
         placaEquipo=0;
+        vidaInicial=0;
         marcaEquipo=null;
         descripcionEquipo=null;
         estadoEquipo="Activo";
@@ -305,7 +308,7 @@ public class ServicioEquiposElectronicatobean implements Serializable{
      */
     public void mensajeCreacionEquipoExitoso(){
         try{
-        Equipo equipoNuevo=new Equipo(serialEquipo, nombreEquipo, placaEquipo,marcaEquipo, descripcionEquipo, estadoEquipo, subEstadoEquipo,proveedorEquipo);
+        Equipo equipoNuevo=new Equipo(serialEquipo, nombreEquipo, placaEquipo, vidaInicial,marcaEquipo, descripcionEquipo, estadoEquipo, subEstadoEquipo,proveedorEquipo);
         services.registroEquipoNuevo(equipoNuevo,nombreDeModelo);
         FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Successful","Se ha registrado el equipo con exito"));
         RequestContext context = RequestContext.getCurrentInstance();
@@ -951,6 +954,20 @@ public class ServicioEquiposElectronicatobean implements Serializable{
      */
     public void setRoles(String roles) {
         this.roles = roles;
+    }
+
+    /**
+     * @return the vidaInicial
+     */
+    public int getVidaInicial() {
+        return vidaInicial;
+    }
+
+    /**
+     * @param vidaInicial the vidaInicial to set
+     */
+    public void setVidaInicial(int vidaInicial) {
+        this.vidaInicial = vidaInicial;
     }
       
     

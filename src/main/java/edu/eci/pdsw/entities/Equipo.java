@@ -17,6 +17,7 @@ public class Equipo {
     private int serial;
     private String nombre;
     private int placa;
+    private int vidaInicial;
     private String marca;
     private String descripcion;
     private String estado;
@@ -35,16 +36,18 @@ public class Equipo {
      * @param serial
      * @param nombre
      * @param placa
+     * @param vidaInicial
      * @param marca
      * @param descripcion
      * @param estado
      * @param subEstado
      * @param proveedor 
      */
-    public Equipo(int serial, String nombre, int placa, String marca, String descripcion, String estado, String subEstado, String proveedor) {
+    public Equipo(int serial, String nombre, int placa,int vidaInicial, String marca, String descripcion, String estado, String subEstado, String proveedor) {
         this.serial = serial;
         this.nombre = nombre;
         this.placa = placa;
+        this.vidaInicial=vidaInicial;
         this.marca = marca;
         this.descripcion = descripcion;
         this.estado = estado;
@@ -186,6 +189,20 @@ public class Equipo {
             rep+="\t["+p+"]\n";
         }
         return rep;
+    }
+
+    /**
+     * @return the vidaInicial
+     */
+    public int getVidaInicial() {
+        return vidaInicial;
+    }
+
+    /**
+     * @param vidaInicial the vidaInicial to set
+     */
+    public void setVidaInicial(int vidaInicial) {
+        this.vidaInicial = vidaInicial;
     }
 }
 

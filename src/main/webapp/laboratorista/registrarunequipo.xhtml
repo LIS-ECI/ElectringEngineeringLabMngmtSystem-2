@@ -156,14 +156,12 @@
             <p:dialog id="crearequipo" header="Registrar equipo" widgetVar="crearEquipo" modal="true" height="450"  resizable="false" closable="true">
                 <h:form >
                 <h:panelGrid columns="2" cellpadding="5" id="panelGrid1">
-                    <h:outputLabel value="Serial: " />
-                    <h:inputText value="#{Equipos.serialEquipo}" required="true" id="serialEquipo"/>
                     <h:outputLabel value="Nombre: " />
                     <h:inputText value="#{Equipos.nombreEquipo}" required="true" id="nombreEquipo"/>
-                    <h:outputLabel value="Placa: " />
-                    <h:inputText value="#{Equipos.placaEquipo}" required="true" id="placaEquipo"/>
                     <h:outputLabel value="Marca: " />
                     <h:inputText value="#{Equipos.marcaEquipo}" required="true" id="marcaEquipo"/>
+                    <h:outputLabel value="Vida inicial en horas: " />
+                    <h:inputText value="#{Equipos.vidaInicial}" required="true" id="vidaInicial"/>
                     <h:outputLabel value="Descripción: " />
                     <h:inputTextarea value="#{Equipos.descripcionEquipo}" required="true" id="descripcionEquipo" style="width:225px"/>
                     <h:outputLabel value="Estado: " />
@@ -179,6 +177,10 @@
                     <h:inputText value="#{Equipos.proveedorEquipo}" required="true" id="proveedorEquipo"/>
                     <h:outputLabel value="Modelo: " />
                     <h:outputLabel value="#{Equipos.nombreDeModelo}"/>
+                    <h:outputLabel value="Placa: " />
+                    <h:inputText value="#{Equipos.placaEquipo}" required="true" id="placaEquipo"/>
+                    <h:outputLabel value="Serial: " />
+                    <h:inputText value="#{Equipos.serialEquipo}" required="true" id="serialEquipo"/>
                 </h:panelGrid>
                 <br/>
                 <p:commandButton value="Registrar Equipo" actionListener="#{Equipos.mensajeCreacionEquipoExitoso}" process="@this,panelGrid1"/>

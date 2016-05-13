@@ -45,6 +45,7 @@ CREATE TABLE EQUIPOS (
     subestados varchar(50) NOT NULL,
     proveedor varchar(100) NULL,
     Modelos_nombre varchar(100) NOT NULL,
+    vidaInicial int not null,
     UNIQUE INDEX placa (placa),
     PRIMARY KEY (serial),
     CONSTRAINT EQUIPOS_MODELO FOREIGN KEY (Modelos_nombre) REFERENCES MODELOS (nombre)
