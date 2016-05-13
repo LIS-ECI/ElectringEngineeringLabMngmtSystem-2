@@ -71,14 +71,14 @@
                             <p:selectOneMenu value="#{Prestamo.tipoEquipo}" id="tipos" style="width:225px">
                                 <p:ajax listener="#{Prestamo.accionCambiarTipo()}" update="cod nocod"/>
                                 <f:selectItem itemLabel="Seleccione tipo de equipo" itemValue="" noSelectionOption="true"/>
-                                <f:selectItem itemLabel="Codificado" itemValue="Codificado" />
-                                <f:selectItem itemLabel="NO Codificado" itemValue="No Codificado" />
+                                <f:selectItem itemLabel="Equipo" itemValue="Codificado" />
+                                <f:selectItem itemLabel="Herramienta" itemValue="No Codificado" />
                             </p:selectOneMenu>
   
                             
                                 <p:panel id="cod" visible="#{Prestamo.codificado}">
                                     <h:panelGrid columns="2" cellpadding="5" id="panelGrid5">
-                                        <h:outputText value="Equipo codificado:"/>
+                                        <h:outputText value="Equipo:"/>
                                         <h:inputText value="#{Prestamo.codigoEquipo}"/>
                                         <h:outputText value="Seleccione tipo préstamo"/>
                                         <p:selectOneMenu value="#{Prestamo.tipoPrestamoSeleccionadoDos}" id="tipoprestamos" style="width:225px" immediate="true">
@@ -90,7 +90,7 @@
                                 </p:panel>
                                 <p:panel id="nocod" visible="#{Prestamo.noCodificado}">
                                     <h:panelGrid columns="2" cellpadding="5" id="panelGrid4">
-                                    <h:outputText value="Equipo no codificado:"/>
+                                    <h:outputText value="Herramienta:"/>
                                     <p:selectOneMenu value="#{Prestamo.nombreEquipoBasicoPrestar}" id="nombres" style="width:225px">
                                             <f:selectItem itemLabel="Seleccione nombre" itemValue="" noSelectionOption="true"/>
                                             <f:selectItems value="#{Devolucion.nombresEquiposBasicos}"/> 
@@ -125,7 +125,7 @@
                         
                         <p:dataList value="#{Prestamo.listaEquiposBasicos}" var="equiposbasicos" type="ordered" itemType="none" paginator="true" rows="10" styleClass="paginated">
                             <f:facet name="header">
-                                Lista equipos básicos
+                                Lista herramientas
                             </f:facet>
                             <p:commandLink update=":form0:equipobasicoinfo" oncomplete="PF('equipobasicoinformacion').show()" title="Ver Detalle" styleClass="ui-icon ui-icon-search" style="float:left;margin-right:50px">
                                 <f:setPropertyActionListener value="#{equiposbasicos}" target="#{Prestamo.prestamoEquipoBasicoSeleccionado}" />

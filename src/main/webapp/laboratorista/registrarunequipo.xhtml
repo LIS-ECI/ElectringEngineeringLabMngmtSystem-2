@@ -56,7 +56,7 @@
                                 <p:panel header="#{modelo.nombre}" style="text-align:center">
                                     <h:panelGrid  style="width:100%;align-items: center">
                                         <p:graphicImage value="#{modelo.foto}" width="25%" style="max-width:70px; max-height:70px;min-height:70px;min-width:70px"/> 
-                                        <p:commandButton value="Crear Equipo" actionListener="#{Equipos.accionBotoncrearEquipo(modelo.nombre)}" oncomplete="PF('crearEquipo').show();" update=":form2"/>
+                                        <p:commandButton value="Registrar Equipo" actionListener="#{Equipos.accionBotoncrearEquipo(modelo.nombre)}" oncomplete="PF('crearEquipo').show();" update=":form2"/>
                                         <p:commandLink update=":form0:modeloInfo" oncomplete="PF('modeloInfoDialog').show()" title="Ver detalles">
                                             <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;" />                                            
                                             <f:setPropertyActionListener value="#{modelo}" target="#{Equipos.modeloSeleccionado}"  />
@@ -65,7 +65,7 @@
                                 </p:panel>
                             </p:dataGrid>
                             <br/>
-                            <p:commandButton value="Crear modelo" onclick="PF('crearModelo').show();"/>
+                            <p:commandButton value="Registrar modelo"  actionListener="#{Equipos.limpiarRegistrarModelo()}" oncomplete="PF('crearModelo').show();"/>
                             
                             
                             <p:dialog  header="Detalles del modelo" widgetVar="modeloInfoDialog"  showEffect="fade" hideEffect="fade" resizable="false" style="text-align:center;">
@@ -105,7 +105,7 @@
                             </p:panelGrid>
                             <p:dataGrid var="equipobasico" value="#{Equipos.filteredListaEquipoBasico}" columns="3" rows="3" paginator="true" id="equiposbasicos" rowsPerPageTemplate="3,6,12" >  
                                 <f:facet name="header">
-                                    Equipos básicos
+                                    Herramientas
                                 </f:facet>
                                 <p:panel header="#{equipobasico.nombre}" style="text-align:center">
                                     <h:panelGrid  style="width:100%;align-items: center">
@@ -122,7 +122,7 @@
                             </p:dataGrid>
                             
                             
-                            <p:dialog  header="Detalles del equipo basico" widgetVar="equipoBasicoInfoDialog"  showEffect="fade" hideEffect="fade" resizable="false" style="text-align:center;">
+                            <p:dialog  header="Detalles de la herramienta" widgetVar="equipoBasicoInfoDialog"  showEffect="fade" hideEffect="fade" resizable="false" style="text-align:center;">
                                 <p:outputPanel id="equipoBasicoInfo">
                                     <p:panelGrid  columns="2" rendered="#{not empty Equipos.equipoBasicoSeleccionado}">
                                         <f:facet name="header">
@@ -140,7 +140,7 @@
                                 </p:outputPanel>
                             </p:dialog>
                             <br/>
-                            <p:commandButton value="Crear equipo básico" onclick="PF('crearEquipoBasico').show();"/>
+                            <p:commandButton value="Registrar herramienta" actionListener="#{Equipos.limpiarRegistrarherramienta()}" oncomplete="PF('crearEquipoBasico').show();"/>
                             
                             
                             
@@ -153,7 +153,7 @@
         
         
         <h:form id="form2">
-            <p:dialog id="crearequipo" header="Crear equipo" widgetVar="crearEquipo" modal="true" height="450"  resizable="false" closable="true">
+            <p:dialog id="crearequipo" header="Registrar equipo" widgetVar="crearEquipo" modal="true" height="450"  resizable="false" closable="true">
                 <h:form >
                 <h:panelGrid columns="2" cellpadding="5" id="panelGrid1">
                     <h:outputLabel value="Serial: " />
@@ -181,11 +181,11 @@
                     <h:outputLabel value="#{Equipos.nombreDeModelo}"/>
                 </h:panelGrid>
                 <br/>
-                <p:commandButton value="Crear Equipo" actionListener="#{Equipos.mensajeCreacionEquipoExitoso}" process="@this,panelGrid1"/>
+                <p:commandButton value="Registrar Equipo" actionListener="#{Equipos.mensajeCreacionEquipoExitoso}" process="@this,panelGrid1"/>
             </h:form>
         </p:dialog>
         </h:form>                    
-        <p:dialog header="Crear modelo" modal="true" widgetVar="crearModelo" height="350"  resizable="false" closable="true">
+        <p:dialog header="Registrar modelo" modal="true" widgetVar="crearModelo" height="350"  resizable="false" closable="true" id="formularioReigstrarModelo">
             <h:form enctype="multipart/form-data">              
                 <h:panelGrid columns="2" id="panelGrid2" cellpadding="5">
                     <h:outputLabel for="nombreModelo"  value="Nombre: " />
@@ -202,12 +202,12 @@
                     <h:inputText value="#{Equipos.fotoModelo}" required="true"/>
                 </h:panelGrid>
                 <br/>
-                <p:commandButton value="Crear Modelo" actionListener="#{Equipos.mensajeCreacionModeloExitoso}" process="@this,panelGrid2" update=":form2;:form0:modelos" ajax="false"/>
+                <p:commandButton value="Registrar modelo" actionListener="#{Equipos.mensajeCreacionModeloExitoso}" process="@this,panelGrid2" update=":form2;:form0:modelos" ajax="false"/>
             </h:form>
         </p:dialog>
         
-        <p:dialog header="Crear equipo básico" modal="true" widgetVar="crearEquipoBasico" height="350"  resizable="false" closable="true">
-            <h:form enctype="multipart/form-data">              
+        <p:dialog header="Registrar Herramienta" modal="true" widgetVar="crearEquipoBasico" height="350"  resizable="false" closable="true" id="formularioCrearHerramienta">
+            <h:form enctype="multipart/form-data" id="herramientaform">              
                 <h:panelGrid columns="2" id="panelGrid24" cellpadding="5">
                     <h:outputLabel for="nombreEquipoBasico"  value="Nombre: " />
                     <h:inputText value="#{Equipos.nombreEquipoBasico}" required="true" id="nombreEquipoBasico"/>
@@ -221,7 +221,7 @@
                     <h:inputText value="#{Equipos.fotoEquipoBasico}" required="true"/>
                 </h:panelGrid>
                 <br/>
-                <p:commandButton value="Crear equipo básico" actionListener="#{Equipos.accionBotonCrearEquipoBasico()}" process="@this,panelGrid24" update=":form2;:form0:equiposbasicos" ajax="false"/>
+                <p:commandButton value="Registrar herramienta" actionListener="#{Equipos.accionBotonCrearEquipoBasico()}" process="@this,panelGrid24" update=":form2;:form0:equiposbasicos" ajax="false"/>
             </h:form>
         </p:dialog>
 

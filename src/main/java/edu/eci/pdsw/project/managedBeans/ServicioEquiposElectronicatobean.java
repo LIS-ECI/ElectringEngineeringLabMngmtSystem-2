@@ -171,6 +171,36 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     }
     
     /**
+     * limpia el forumulario para registrar un nuevo modelo
+     */
+    public void limpiarRegistrarModelo(){
+        nombreDeModelo="";
+        claseModelo="";
+        vidaUtilEnHorasModelo=0;
+        valorComercialModelo=0;
+        estaAseguradoModelo=false;
+        fotoModelo="";
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.update("formularioReigstrarModelo");
+    }
+    
+    /**
+     * limpia el forumulario para registrar una nueva herramienta
+     */
+    public void limpiarRegistrarherramienta(){
+        nombreEquipoBasico="";
+        valorEquipoBasico=0;
+        descripcionEquipoBasico="";
+        cantidadEquipoBasico=0;
+        fotoEquipoBasico="";
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.update("formularioCrearHerramienta");
+    }
+    
+    
+    
+         
+    /**
      * dependiendo el estado (activo-desactivo) se actualizan los diferentes sub estados relacionados a cada uno. Se hace para evitar cosas como que el usuario meta estao desactivo y un subestado en almacen (que no puede pasar)
      */
     public void onEstadoChange() {
@@ -212,7 +242,7 @@ public class ServicioEquiposElectronicatobean implements Serializable{
             context.update("equiposbasicos");
             context.execute("PF('actualizarCantidadEquipoBasico').hide();");
         }catch(Exception e){
-           FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error","No se ha actualizado el equipo basico ,sucedio algo inesperado"));
+           FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error",e.getMessage()));
        }
     }
     
@@ -227,7 +257,7 @@ public class ServicioEquiposElectronicatobean implements Serializable{
         RequestContext context = RequestContext.getCurrentInstance();
         context.execute("PF('crearEquipoBasico').hide();");
        }catch(Exception e){
-           FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error","No se ha registrado el equipo basico ,sucedio algo inesperado"));
+           FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error",e.getMessage()));
        }
     }
     
@@ -282,7 +312,7 @@ public class ServicioEquiposElectronicatobean implements Serializable{
         context.execute("PF('crearEquipo').hide();");
         }
         catch(Exception e){
-            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error","No se ha registrado el Equipo ,sucedio algo inesperado"));
+            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error",e.getMessage()));
     
         }
         
@@ -299,12 +329,20 @@ public class ServicioEquiposElectronicatobean implements Serializable{
         RequestContext context = RequestContext.getCurrentInstance();
         context.execute("PF('crearModelo').hide();");
        }catch(Exception e){
-           FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error","No se ha registrado el modelo ,sucedio algo inesperado"));
+           FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error",e.getMessage()));
        }
     }
     
     public void accionBotoncrearEquipo(String modelo){
         nombreDeModelo=modelo;
+        serialEquipo=0;
+        nombreEquipo="";
+        placaEquipo=0;
+        marcaEquipo="";
+        descripcionEquipo="";
+        proveedorEquipo="";
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.update("form2:crearequipo");
     }
    
     /**
