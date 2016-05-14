@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+         <title>registrar una devolucion</title>
+    </h:head>
+    
+    <h:body> 
+        <p:growl id="growl" showDetail="true" sticky="true" autoUpdate="true"/>
+        <h:form id="devo_form">
+                <p:layout>
+                    <p:layoutUnit position="north">
+                        <p:panel header="Datos de usuario" style="height:200px;background-color: transparent;border: 0;">
+                           
+                            <p:panelGrid columns="2">
+                                <h:outputLabel value="id:" />
+                                <h:outputText value="#{Equipos.id}"/>
+                                <h:outputLabel value="Nombre:" />
+                                <h:outputText value="#{Equipos.nombre}"/>
+                                <h:outputLabel value="Correo:" />
+                                <h:outputText value="#{Equipos.correo}"/>
+                                <h:outputLabel value="Roles:" />
+                                <h:outputText value="#{Equipos.roles}"/>
+                            </p:panelGrid>
+                        </p:panel>
+                    </p:layoutUnit>
+                    <p:layoutUnit position="west">
+
+                        <p:panel style="width:220px">
+                            <p:commandButton value="Registrar Un Préstamo" rendered="#{loginBean.botonRegistrarUnPrestamo}" action="registrarunprestamo" immediate="true"/>
+                            <br/>
+                            <br/>
+                            <p:commandButton value="Registrar Una Devolución" rendered="#{loginBean.botonRegistrarUnaDevolucion}" action="registrarunadevolucion" immediate="true"/>
+                            <br/>
+                            <br/>
+                            <p:commandButton value="Registrar Equipo En Inventario" rendered="#{loginBean.botonRegistrarEquipoEnInventario}" action="registrarunequipo" immediate="true"/>
+                            <br/>
+                            <br/>
+                            <p:commandButton value="Consultar la ficha de un equipo" rendered="#{loginBean.botonConsultarFicha}" actionListener="#{ConsultaFicha.limpiarPaginaConsultarFicha}" ajax="false" immediate="true" update="form0"/>
+                        </p:panel>
+                    </p:layoutUnit>
+                    <p:layoutUnit position="center">
+                        
+                    </p:layoutUnit>
+                    </p:layout>
+        </h:form>
+    </h:body>
+</html>

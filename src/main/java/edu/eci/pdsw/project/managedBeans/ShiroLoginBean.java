@@ -31,6 +31,7 @@ private Boolean rememberMe;
 private boolean botonRegistrarEquipoEnInventario=false;
 private boolean botonRegistrarUnaDevolucion=false;
 private boolean botonRegistrarUnPrestamo =false;
+private boolean botonConsultarFicha = false;
 
 public ShiroLoginBean() {
 }
@@ -49,6 +50,7 @@ public void doLogin() {
             botonRegistrarEquipoEnInventario=true;
             botonRegistrarUnaDevolucion=true;
             botonRegistrarUnPrestamo=true;
+            botonConsultarFicha=true;
             FacesContext.getCurrentInstance().getExternalContext().redirect("restricted/usuario.xhtml");
         }
         else if (subject.hasRole("administrador")) {
@@ -69,20 +71,20 @@ public void doLogin() {
         log.error(ex.getMessage(), ex);
     }
     catch (IncorrectCredentialsException ex) {
-    facesError("Wrong password");
-    log.error(ex.getMessage(), ex);
+        facesError("Wrong password");
+        log.error(ex.getMessage(), ex);
     }
     catch (LockedAccountException ex) {
-    facesError("Locked account");
-    log.error(ex.getMessage(), ex);
+        facesError("Locked account");
+        log.error(ex.getMessage(), ex);
     }
     catch (AuthenticationException ex) {
-    facesError("Unknown error: " + ex.getMessage());
-    log.error(ex.getMessage(), ex);
+        facesError("Unknown error: " + ex.getMessage());
+        log.error(ex.getMessage(), ex);
     }
     catch (IOException ex){
-    facesError("Unknown error: " + ex.getMessage());
-    log.error(ex.getMessage(), ex);
+        facesError("Unknown error: " + ex.getMessage());
+        log.error(ex.getMessage(), ex);
     }
     finally {
     token.clear();
@@ -153,5 +155,19 @@ this.rememberMe = lembrar;
      */
     public void setBotonRegistrarUnPrestamo(boolean botonRegistrarUnPrestamo) {
         this.botonRegistrarUnPrestamo = botonRegistrarUnPrestamo;
+    }
+
+    /**
+     * @return the botonConsultarFicha
+     */
+    public boolean isBotonConsultarFicha() {
+        return botonConsultarFicha;
+    }
+
+    /**
+     * @param botonConsultarFicha the botonConsultarFicha to set
+     */
+    public void setBotonConsultarFicha(boolean botonConsultarFicha) {
+        this.botonConsultarFicha = botonConsultarFicha;
     }
 }
