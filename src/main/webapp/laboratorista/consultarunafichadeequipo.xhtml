@@ -12,6 +12,7 @@
     <h:body> 
         <p:growl id="growl" showDetail="true" sticky="true" autoUpdate="true"/>
         <h:form id="devo_form">
+            <p:focus context="panelSerial"/>
                 <p:layout>
                     <p:layoutUnit position="north">
                         <p:panel header="Datos de usuario" style="height:200px;background-color: transparent;border: 0;">
@@ -44,7 +45,17 @@
                         </p:panel>
                     </p:layoutUnit>
                     <p:layoutUnit position="center">
-                        
+                        <p:panel  header = "Equipo a consultar" id="panelSerial">
+                        <h:form>
+                            <p:defaultCommand target="botonEnviar" />
+                            <p:panelGrid columns="2">    
+                                <h:outputLabel value="Serial: " />
+                                <h:inputText value="#{CosultarFicha.serialAconsultar}" />
+                            </p:panelGrid>
+                        <br/>
+                        <p:commandButton value ="Enviar" actionListener="#{ConsultarFicha.accionConsultarFicha}" update="" id="botonEnviar"/>
+                        </h:form>
+                        </p:panel>                       
                     </p:layoutUnit>
                     </p:layout>
         </h:form>
