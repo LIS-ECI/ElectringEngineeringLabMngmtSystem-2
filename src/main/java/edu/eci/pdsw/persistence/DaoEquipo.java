@@ -65,7 +65,7 @@ public interface DaoEquipo {
     
     /**
     * registrar un equipo basico nuevo dado el equipo basico como entidad (objeto)
-    * @param eb, el equipo basico a registrar en la bd
+    * @param eq, el equipo basico a registrar en la bd
     */
     public void registrarEquipoBasicoNuevo(EquipoBasico eq) throws PersistenceException;
     
@@ -74,5 +74,9 @@ public interface DaoEquipo {
     public void updateEstadoEquipo(int codigoEquipo, String tipoPrestamoSeleccionadoDos);
 
     public void updateCantidadEquipoBasico(String nombreEquipoBasicoPrestar, int cantidadEquipoBasicoSeleccionada);
+
+    public Equipo loadEquipoByPlaca(int placa);
+
+    public String loadNameModeloByPlaca(int placa);
     
 }

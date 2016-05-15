@@ -5,10 +5,15 @@
  */
 package edu.eci.pdsw.project.managedBeans;
 
+import edu.eci.pdsw.entities.Equipo;
+import edu.eci.pdsw.entities.Modelo;
 import edu.eci.pdsw.services.Services;
+import edu.eci.pdsw.services.ServicesException;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -17,17 +22,49 @@ import javax.faces.bean.SessionScoped;
 @ManagedBean(name="ConsultarFicha")
 @SessionScoped
 public class ServiciosConsultarFichaBean {
+    
     @ManagedProperty(value = "#{loginBean}")    
     private ShiroLoginBean loginBean;  
     private Services services;
-    private String serialAconsultar;
+    private String placaAconsultar;
+    private Equipo equiposeleccionado;
+    private Modelo modeloAsociado;
+    
+    public ServiciosConsultarFichaBean() {
+        services = Services.getInstance("applicationconfig.properties");;
+        placaAconsultar="";
+        equiposeleccionado=null;
+        modeloAsociado=null;
+    }
+    
+    public void limpiarPaginaConsultarFicha(){
+        services = Services.getInstance("applicationconfig.properties");;
+        placaAconsultar="";
+        equiposeleccionado=null;
+        modeloAsociado=null;
+    }
+        
     
     /**
      * consulta la informacion de la ficha que lleva el equipo correspondiente al serial ingresado por el ususario
      */
     public void accionConsultarFicha(){
-    
+        try {
+            equiposeleccionado = services.loadEquipoByPlaca(Integer.parseInt(placaAconsultar));
+            modeloAsociado = services.loadModeloByName(services.loadNameModeloByPlaca(Integer.parseInt(placaAconsultar)));
+                    
+            //System.out.println(equiposeleccionado);
+            //System.out.println(modeloAsociado);
+            
+        } catch (ServicesException e) {
+            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error",e.getLocalizedMessage()));
+        }
+        catch(NumberFormatException e){
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Error", "La placa "+placaAconsultar+" no esta permitida, debe ser un numero positivo"));
+        }
+        
     }
+    
     /**
      * @return the loginBean
      */
@@ -57,16 +94,46 @@ public class ServiciosConsultarFichaBean {
     }
 
     /**
-     * @return the serialAconsultar
+     * @return the placaAconsultar
      */
-    public String getSerialAconsultar() {
-        return serialAconsultar;
+    public String getPlacaAconsultar() {
+        return placaAconsultar;
     }
 
     /**
-     * @param serialAconsultar the serialAconsultar to set
+     * @param placaAconsultar the placaAconsultar to set
      */
-    public void setSerialAconsultar(String serialAconsultar) {
-        this.serialAconsultar = serialAconsultar;
+    public void setPlacaAconsultar(String placaAconsultar) {
+        this.placaAconsultar = placaAconsultar;
     }
+
+    /**
+     * @return the equiposeleccionado
+     */
+    public Equipo getEquiposeleccionado() {
+        return equiposeleccionado;
+    }
+
+    /**
+     * @param equiposeleccionado the equiposeleccionado to set
+     */
+    public void setEquiposeleccionado(Equipo equiposeleccionado) {
+        this.equiposeleccionado = equiposeleccionado;
+    }
+
+    /**
+     * @return the modeloAsociado
+     */
+    public Modelo getModeloAsociado() {
+        return modeloAsociado;
+    }
+
+    /**
+     * @param modeloAsociado the modeloAsociado to set
+     */
+    public void setModeloAsociado(Modelo modeloAsociado) {
+        this.modeloAsociado = modeloAsociado;
+    }
+
+    
 }

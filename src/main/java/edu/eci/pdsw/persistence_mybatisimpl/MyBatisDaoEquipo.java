@@ -118,5 +118,23 @@ public class MyBatisDaoEquipo implements DaoEquipo{
         emap.updateCantidadEquipoBasico(nombreEquipoBasicoPrestar,cantidadEquipoBasicoSeleccionada);
     }
 
+    @Override
+    public Equipo loadEquipoByPlaca(int placa) {
+        Equipo eq = emap.loadEquipoByPlaca(placa);
+        if(eq==null){
+            throw new PersistenceException("El equipo con placa "+placa+" no se encuentra registrado en la base de datos");
+        }
+        return eq;
+    }
+
+    @Override
+    public String loadNameModeloByPlaca(int placa) {
+        String name= emap.loadNameModeloByPlaca(placa);
+        if(name==null){
+            throw new PersistenceException("El Modelo asociado al equipo con placa "+placa+" no se encuentra registrado en la base de datos");
+        }
+        return name;
+    }
+
     
 }

@@ -122,7 +122,7 @@ public class Services {
     
     /**
      * carga un equipo basico dado el nombre de este
-     * @param nombre, el nombre del equipo basico a cargar
+     * @param name, el nombre del equipo basico a cargar
      * @return el equipo basico identificado con ese nombre
      * @throws edu.eci.pdsw.services.ServicesException
     */
@@ -161,7 +161,7 @@ public class Services {
     
     /**
      * registrar un equipo nuevo dado el equipo como entidad (objeto)
-     * @param e, el equipo a registrar en la bd
+     * @param equipo, el equipo a registrar en la bd
      * @param modelo, el modelo al que pertenece este equipo
      * @throws edu.eci.pdsw.services.ServicesException
      */    
@@ -180,7 +180,7 @@ public class Services {
     
     /**
      * registrar un modelo nuevo dado el modelo como entidad (objeto)
-     * @param m, el modelo a registrar en la bd
+     * @param modelo , el modelo a registrar en la bd
      * @throws edu.eci.pdsw.services.ServicesException
      */    
     public void registroModeloNuevo(Modelo modelo) throws ServicesException{
@@ -198,8 +198,7 @@ public class Services {
     
     /**
      * registrar un equipo nuevo dado el equipo como entidad (objeto)
-     * @param e, el equipo a registrar en la bd
-     * @param modelo, el modelo al que pertenece este equipo
+     * @param equipobasico , el equipo a registrar en la bd
      * @throws edu.eci.pdsw.services.ServicesException
      */    
     public void registroEquipoBasicoNuevo(EquipoBasico equipobasico) throws ServicesException{
@@ -386,6 +385,34 @@ public class Services {
         }finally{
            df.endSession();  
         }
+    }
+
+    public Equipo loadEquipoByPlaca(int placa) throws ServicesException {
+        DaoFactory df=DaoFactory.getInstance(properties);
+        Equipo ans=null;
+        try{
+            df.beginSession();
+            ans =df.getDaoEquipo().loadEquipoByPlaca(placa);  
+        }catch(PersistenceException e){
+            throw new ServicesException(e,e.getLocalizedMessage());
+        }finally{
+           df.endSession();  
+        }
+        return ans;
+    }
+
+    public String loadNameModeloByPlaca(int placa) throws ServicesException {
+        DaoFactory df=DaoFactory.getInstance(properties);
+        String ans= null;
+        try{
+            df.beginSession();
+            ans=df.getDaoEquipo().loadNameModeloByPlaca(placa);
+        }catch(PersistenceException e){
+            throw new ServicesException(e,e.getLocalizedMessage());
+        }finally{
+           df.endSession();  
+        }
+        return ans;
     }
     
 }

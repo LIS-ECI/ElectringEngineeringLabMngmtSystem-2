@@ -199,6 +199,21 @@
             cantidad = cantidad - #{cantidad}
         WHERE nombre = #{nombre}
     </update>
+    
+    <select id='loadEquipoByPlaca' parameterType='map' resultMap='EquipoResult'>
+        SELECT eq.serial,eq.nombre,eq.placa,eq.vidaInicial,eq.marca,eq.descripcion,eq.estado,eq.subestados as subEstado,eq.proveedor,
+               pre.USUARIOS_id as pre_usuario_id,pre.fechaExpedicion as pre_fechaExpedicion,pre.fechaVencimiento as pre_fechaVencimiento,pre.tipoPrestamo as pre_tipoPrestamo
+        FROM EQUIPOS as eq
+                     left join PRESTAMOS as pre on eq.serial=pre.EQUIPOS_serial
+        WHERE eq.placa=#{placaequipo}
+    </select>
+    
+    <select id='loadNameModeloByPlaca' resultType="java.lang.String">
+        SELECT eq.Modelos_nombre 
+        FROM EQUIPOS as eq 
+        WHERE eq.placa=#{placaequipo} 
+    </select>
+    
 </mapper>
     
     

@@ -166,4 +166,18 @@ public interface EquipoMapper {
      * @param pbu 
      */
     public void registrarNuevoPrestamoBasico(@Param("pbe") PrestamoBasicoEquipo pbe,@Param("pbu") PrestamoBasicoUsuario pbu);
+
+    /**
+     * 
+     * @param placa
+     * @return 
+     */
+    public Equipo loadEquipoByPlaca(@Param("placaequipo")int placa);
+    
+    /**
+     * 
+     * @param placa
+     * @return 
+     */
+    public String loadNameModeloByPlaca(@Param("placaequipo")int placa);
 }

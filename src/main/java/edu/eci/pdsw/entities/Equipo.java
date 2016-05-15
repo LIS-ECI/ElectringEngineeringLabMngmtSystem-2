@@ -184,7 +184,7 @@ public class Equipo {
     
     @Override
     public String toString() {
-        String rep = "Equipo:["+serial+","+nombre+","+placa+","+marca+","+descripcion+","+estado+","+subEstado+","+proveedor+"]\n";
+        String rep = "Equipo:["+serial+","+nombre+","+vidaInicial+","+placa+","+marca+","+descripcion+","+estado+","+subEstado+","+proveedor+"]\n";
         for (PrestamoEquipo p:prestamos){
             rep+="\t["+p+"]\n";
         }
