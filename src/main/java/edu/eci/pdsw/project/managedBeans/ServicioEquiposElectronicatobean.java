@@ -254,11 +254,23 @@ public class ServicioEquiposElectronicatobean implements Serializable{
      */
     public void accionBotonCrearEquipoBasico(){
         try{
-        EquipoBasico equipoNuevo=new EquipoBasico(nombreEquipoBasico, valorEquipoBasico, fotoEquipoBasico,descripcionEquipoBasico, cantidadEquipoBasico);
-        services.registroEquipoBasicoNuevo(equipoNuevo);
-        FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Successful","Se ha registrado el equipo basico con exito"));
-        RequestContext context = RequestContext.getCurrentInstance();
-        context.execute("PF('crearEquipoBasico').hide();");
+            boolean continua=true;
+            if(nombreEquipoBasico==null || nombreEquipoBasico.equals("")){
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El nombre de la herramienta es necesaria."));
+                continua=false;
+            }
+            if(fotoEquipoBasico==null || fotoEquipoBasico.equals("")){
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "La foto de la herramienta es necesaria."));
+                continua=false;
+            }
+            if(continua){
+                EquipoBasico equipoNuevo=new EquipoBasico(nombreEquipoBasico, valorEquipoBasico, fotoEquipoBasico,descripcionEquipoBasico, cantidadEquipoBasico);
+                services.registroEquipoBasicoNuevo(equipoNuevo);
+                FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Successful","Se ha registrado el equipo basico con exito"));
+                RequestContext context = RequestContext.getCurrentInstance();
+                context.execute("PF('crearEquipoBasico').hide();");
+            }
+        
        }catch(Exception e){
            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error",e.getMessage()));
        }
@@ -308,11 +320,34 @@ public class ServicioEquiposElectronicatobean implements Serializable{
      */
     public void mensajeCreacionEquipoExitoso(){
         try{
-        Equipo equipoNuevo=new Equipo(serialEquipo, nombreEquipo, placaEquipo, vidaInicial,marcaEquipo, descripcionEquipo, estadoEquipo, subEstadoEquipo,proveedorEquipo);
-        services.registroEquipoNuevo(equipoNuevo,nombreDeModelo);
-        FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Successful","Se ha registrado el equipo con exito"));
-        RequestContext context = RequestContext.getCurrentInstance();
-        context.execute("PF('crearEquipo').hide();");
+            boolean continua=true;
+            if(nombreEquipo==null || nombreEquipo.equals("")){
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El nombre del equipo es necesario."));
+                continua=false;
+            }
+            if(marcaEquipo==null || marcaEquipo.equals("")){
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "La marca del equipo es necesaria."));
+                continua=false;
+            }
+            if(descripcionEquipo==null || descripcionEquipo.equals("")){
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "La descripción del equipo es necesaria."));
+                continua=false;
+            }
+            if(proveedorEquipo==null || proveedorEquipo.equals("")){
+                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El proveedor del equipo es necesario."));
+                 continua=false;
+            }
+            
+            
+            
+            if(continua){
+                Equipo equipoNuevo=new Equipo(serialEquipo, nombreEquipo, placaEquipo, vidaInicial,marcaEquipo, descripcionEquipo, estadoEquipo, subEstadoEquipo,proveedorEquipo);
+                services.registroEquipoNuevo(equipoNuevo,nombreDeModelo);
+                FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Successful","Se ha registrado el equipo con exito"));
+                RequestContext context = RequestContext.getCurrentInstance();
+                context.execute("PF('crearEquipo').hide();");
+            }
+            
         }
         catch(Exception e){
             FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error",e.getMessage()));
@@ -326,11 +361,27 @@ public class ServicioEquiposElectronicatobean implements Serializable{
      */
     public void mensajeCreacionModeloExitoso(){
        try{
-        Modelo modeloNuevo=new Modelo(nombreDeModelo, claseModelo, vidaUtilEnHorasModelo, valorComercialModelo, estaAseguradoModelo, fotoModelo);
-        services.registroModeloNuevo(modeloNuevo);
-        FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Successful","Se ha registrado el modelo con exito"));
-        RequestContext context = RequestContext.getCurrentInstance();
-        context.execute("PF('crearModelo').hide();");
+           boolean continua=true;
+           if(nombreDeModelo==null || nombreDeModelo.equals("")){
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El nombre del modelo es necesario."));
+                continua=false;
+            }
+            if(claseModelo==null || claseModelo.equals("")){
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "La clase del modelo es necesaria."));
+                continua=false;
+            }
+            if(fotoModelo==null || fotoModelo.equals("")){
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "La foto del modelo es necesaria."));
+                continua=false;
+            }
+           if(continua){
+               Modelo modeloNuevo=new Modelo(nombreDeModelo, claseModelo, vidaUtilEnHorasModelo, valorComercialModelo, estaAseguradoModelo, fotoModelo);
+               services.registroModeloNuevo(modeloNuevo);
+               FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Successful","Se ha registrado el modelo con exito"));
+               RequestContext context = RequestContext.getCurrentInstance();
+               context.execute("PF('crearModelo').hide();");
+           }
+        
        }catch(Exception e){
            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error",e.getMessage()));
        }

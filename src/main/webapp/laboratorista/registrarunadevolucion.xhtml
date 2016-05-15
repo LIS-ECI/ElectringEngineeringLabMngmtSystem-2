@@ -82,9 +82,51 @@
                             
                         </p:panel>
                         <br/>
-                        
+                        <p:commandButton value="Registrar devolución global" onclick="PF('devolucionGlobal').show()"/>
                     </p:layoutUnit>
                 </p:layout>
+        </h:form>
+        <h:form id="form69">
+            <p:dialog  header="Registrar devolución global" widgetVar="devolucionGlobal"  showEffect="fade" hideEffect="fade" resizable="false" style="text-align:center;" id="registrarGlobal">
+                <p:focus context="inputGlobal"/>
+                <p:defaultCommand target="botonAceptar"/>
+                <p:panelGrid columns="2" id="panelGrid69">
+                    <h:outputText value="Identificador prestamista:" />
+                    <h:inputText value="#{Devolucion.codigoUsuario}" id="inputGlobal"/>
+                </p:panelGrid>
+                <p:separator/>
+                <p:commandButton id="botonAceptar" value="aceptar" actionListener="#{Devolucion.botonAceptarDevolucionGlobal()}" process="panelGrid69 @this" update="panelDevolucionGlobal"/>
+                <p:separator/>
+                <p:panel id="panelDevolucionGlobal" visible="#{Devolucion.usuarioExiste}">
+                    <p:dataList value="#{Devolucion.listaPrestamoActuales}" var="equipo" type="ordered">
+                        <f:facet name="header">
+                            Préstamos equipos actuales
+                        </f:facet>
+                        Serial: #{equipo.equipo_serial}
+                        <br/>
+                        Fecha expedición: #{equipo.fechaExpedicion} 
+                        <br/>
+                        Tipo préstamo: #{equipo.tipoPrestamo}
+                        <br/>
+                    </p:dataList>
+                    <p:separator/>
+                    <p:dataList value="#{Devolucion.listaPrestamoBasicoActuales}" var="herramienta" type="ordered">
+                        <f:facet name="header">
+                            Préstamos herramientas actuales
+                        </f:facet>
+                        Nombre: #{herramienta.equipoBasico_nombre}
+                        <br/>
+                        Fecha expedición: #{herramienta.fechaExpedicion}
+                        <br/>
+                        Tipo préstamo: #{herramienta.tipoPrestamo}
+                        <br/>
+                        Cantidad prestada: #{herramienta.cantidadPrestada}
+                        <br/>
+                    </p:dataList>
+                    <p:separator/>
+                    <p:commandButton value="Registrar devolución global" actionListener="#{Devolucion.botonFinalDevolucioGlobal()}"/>
+                </p:panel>
+            </p:dialog>                 
         </h:form>
     </h:body>
 </html>

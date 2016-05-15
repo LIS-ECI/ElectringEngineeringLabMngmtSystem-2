@@ -48,7 +48,7 @@
                         <p:panel style="border:0;" >
                             <p:panelGrid columns="2">
                             <h:outputText styleClass="ui-icon ui-icon-search" />
-                            <p:inputText value="#{Equipos.nombreDeModelo}">
+                            <p:inputText value="#{Equipos.nombreDeModelo}" >
                                 <p:ajax event="keyup" update="modelos" listener="#{Equipos.filterList()}"/>
                             </p:inputText>        
                             </p:panelGrid>
@@ -160,13 +160,13 @@
                 <h:form >
                 <h:panelGrid columns="2" cellpadding="5" id="panelGrid1">
                     <h:outputLabel value="Nombre: " />
-                    <h:inputText value="#{Equipos.nombreEquipo}" required="true" id="nombreEquipo"/>
+                    <h:inputText value="#{Equipos.nombreEquipo}" id="nombreEquipo"/>
                     <h:outputLabel value="Marca: " />
-                    <h:inputText value="#{Equipos.marcaEquipo}" required="true" id="marcaEquipo"/>
+                    <h:inputText value="#{Equipos.marcaEquipo}"  id="marcaEquipo"/>
                     <h:outputLabel value="Vida inicial en horas: " />
-                    <h:inputText value="#{Equipos.vidaInicial}" required="true" id="vidaInicial"/>
+                    <h:inputText value="#{Equipos.vidaInicial}" id="vidaInicial"/>
                     <h:outputLabel value="Descripción: " />
-                    <h:inputTextarea value="#{Equipos.descripcionEquipo}" required="true" id="descripcionEquipo" style="width:225px"/>
+                    <h:inputTextarea value="#{Equipos.descripcionEquipo}" id="descripcionEquipo" style="width:225px"/>
                     <h:outputLabel value="Estado: " />
                     <p:selectOneMenu value="#{Equipos.estadoEquipo}" required="true" id="estadoEquipo" style="width:225px">
                             <p:ajax listener="#{Equipos.onEstadoChange}" update="subEstadoEquipo" />
@@ -177,7 +177,7 @@
                            <f:selectItems value="#{Equipos.subestados}" />
                     </p:selectOneMenu>
                     <h:outputLabel value="Proveedor: " />
-                    <h:inputText value="#{Equipos.proveedorEquipo}" required="true" id="proveedorEquipo"/>
+                    <h:inputText value="#{Equipos.proveedorEquipo}" id="proveedorEquipo"/>
                     <h:outputLabel value="Modelo: " />
                     <h:outputLabel value="#{Equipos.nombreDeModelo}"/>
                     <h:outputLabel value="Placa: " />
@@ -194,9 +194,9 @@
             <h:form enctype="multipart/form-data">              
                 <h:panelGrid columns="2" id="panelGrid2" cellpadding="5">
                     <h:outputLabel for="nombreModelo"  value="Nombre: " />
-                    <h:inputText value="#{Equipos.nombreDeModelo}" required="true" id="nombreModelo"/>
+                    <h:inputText value="#{Equipos.nombreDeModelo}" id="nombreModelo"/>
                     <h:outputLabel for="claseModelo"  value="Clase: " />
-                    <h:inputText value="#{Equipos.claseModelo}" required="true" id="claseModelo"/>
+                    <h:inputText value="#{Equipos.claseModelo}" id="claseModelo"/>
                     <h:outputLabel value="Vida útil(horas): " for="vidaUtilEnHorasModelo"/>
                     <h:inputText value="#{Equipos.vidaUtilEnHorasModelo}" required="true" id="vidaUtilEnHorasModelo"/>
                     <h:outputLabel value="Precio(pesos colombianos): " for="valorComercialModelo"/>
@@ -204,7 +204,7 @@
                     <h:outputLabel value="Esta asegurado?: " for="estaAseguradoModelo" />
                     <p:selectBooleanCheckbox value="#{Equipos.estaAseguradoModelo}" id="estaAseguradoModelo"/>
                     <h:outputLabel value="URL Imagen: " />
-                    <h:inputText value="#{Equipos.fotoModelo}" required="true"/>
+                    <h:inputText value="#{Equipos.fotoModelo}" />
                 </h:panelGrid>
                 <br/>
                 <p:commandButton value="Registrar modelo" actionListener="#{Equipos.mensajeCreacionModeloExitoso}" process="@this,panelGrid2" update=":form2;:form0:modelos" ajax="false"/>
@@ -215,7 +215,7 @@
             <h:form enctype="multipart/form-data" id="herramientaform">              
                 <h:panelGrid columns="2" id="panelGrid24" cellpadding="5">
                     <h:outputLabel for="nombreEquipoBasico"  value="Nombre: " />
-                    <h:inputText value="#{Equipos.nombreEquipoBasico}" required="true" id="nombreEquipoBasico"/>
+                    <h:inputText value="#{Equipos.nombreEquipoBasico}"  id="nombreEquipoBasico"/>
                     <h:outputLabel for="valorEquipoBasico"  value="Precio(pesos colombianos por unidad): " />
                     <h:inputText value="#{Equipos.valorEquipoBasico}" required="true" id="valorEquipoBasico"/>
                     <h:outputLabel value="Descripcion: "/>
@@ -223,7 +223,7 @@
                     <h:outputLabel value="Cantidad: " />
                     <h:inputText value="#{Equipos.cantidadEquipoBasico}" required="true" id="cantidadEquipoBasico"/>
                     <h:outputLabel value="URL Imagen: " />
-                    <h:inputText value="#{Equipos.fotoEquipoBasico}" required="true"/>
+                    <h:inputText value="#{Equipos.fotoEquipoBasico}"/>
                 </h:panelGrid>
                 <br/>
                 <p:commandButton value="Registrar herramienta" actionListener="#{Equipos.accionBotonCrearEquipoBasico()}" process="@this,panelGrid24" update=":form2;:form0:equiposbasicos" ajax="false"/>

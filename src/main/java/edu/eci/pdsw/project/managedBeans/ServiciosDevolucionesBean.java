@@ -15,8 +15,10 @@ import edu.eci.pdsw.services.ServicesException;
 import java.io.Serializable;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -64,14 +66,96 @@ public class ServiciosDevolucionesBean implements Serializable{
     private String nombreEquipoBasicoDevolver;
     private int cantidadBasicaDevuelta=1;
     private Usuario usuarioDevolucionBasico;
+    //datos para una devolucion global
+    private String codigoUsuario;
+    private boolean usuarioExiste=false;
+    private List<PrestamoUsuario> listaPrestamoActuales;
+    private List<PrestamoBasicoUsuario> listaPrestamoBasicoActuales;
     
     private HashMap<String, String> nombresEquiposBasicos;
     Services se;
+    
+    
+    /**
+     * boton aceptar, para registrar una devolucion global
+     */
+    public void botonAceptarDevolucionGlobal(){
+        
+        RequestContext context = RequestContext.getCurrentInstance();
+        boolean continua=true;
+        int codigo=0;
+        try{
+            codigo=Integer.parseInt(codigoUsuario);
+        }catch(Exception e){
+            continua=false;
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Error", "El codigo del usuario debe ser un entero positivo"));
+        }
+        if(continua){
+            try {
+                Usuario usuario=se.loadUsuarioById(codigo);
+                listaPrestamoActuales=new ArrayList<PrestamoUsuario>();
+                listaPrestamoBasicoActuales=new ArrayList<PrestamoBasicoUsuario>();
+                for(PrestamoUsuario p:usuario.getPrestamos()){
+                    if(p.getFechaVencimiento()==null){
+                        listaPrestamoActuales.add(p);
+                    }
+                }
+                for(PrestamoBasicoUsuario pb:usuario.getPrestamosBasicos()){
+                    if(pb.getFechaVencimiento()==null){
+                        listaPrestamoBasicoActuales.add(pb);
+                    }
+                }
+                usuarioExiste=true;
+                context.update(":form69:registrarGlobal");
+            } catch (ServicesException ex) {
+                usuarioExiste=false;
+                FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error",ex.getLocalizedMessage()));
+            }
+        }
+    }
+    
+    /**
+     * botonFinalDevolucioGlobal, este boton es el que realmente cnofirma la devolucion (cambia el estado de los equipos)
+     */
+    public void botonFinalDevolucioGlobal(){
+        try{
+            RequestContext context = RequestContext.getCurrentInstance();
+            if(listaPrestamoActuales!=null){
+                for (int i = 0; i < listaPrestamoActuales.size(); i++) {
+                    se.updatePrestamos(listaPrestamoActuales.get(i),Integer.parseInt(codigoUsuario));
+                }
+            }
+            if(listaPrestamoBasicoActuales!=null){
+                for (int j = 0; j < listaPrestamoBasicoActuales.size(); j++) {
+                    se.updatePrestamosBasicos(listaPrestamoBasicoActuales.get(j),Integer.parseInt(codigoUsuario));
+                }
+            }
+            context.execute("PF('devolucionGlobal').hide();");
+            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Succes","Se han registrado todas las devoluciónes con exito"));
+            limpiarRegistrarDevolucionGlobal();
+            context.update("form69");
+            
+        }catch(ServicesException ex){
+            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error",ex.getLocalizedMessage()));
+        }
+    }
+    
+    /**
+     * limpia registrar una devolucion global
+     */
+    public void limpiarRegistrarDevolucionGlobal(){
+        usuarioExiste=false;
+        listaPrestamoBasicoActuales=new ArrayList<PrestamoBasicoUsuario>();
+        listaPrestamoActuales=new ArrayList<PrestamoUsuario>();
+        codigoUsuario="";
+    }
+    
     
     /**
      * deja a todos los elementos involucrados en una devolución de equipo normal en su estado original
      */
     public void limpiarDevolucion(){
+        usuarioExiste=false;
         yaBusqueEquipoADevolver = false;
         serialDevolucionEncontrado = false;
         serialDevolucionNoEncontrado = true;
@@ -365,6 +449,62 @@ public class ServiciosDevolucionesBean implements Serializable{
      */
     public void setNombresEquiposBasicos(HashMap<String, String> nombresEquiposBasicos) {
         this.nombresEquiposBasicos = nombresEquiposBasicos;
+    }
+
+    /**
+     * @return the nombreUsuario
+     */
+    public String getCodigoUsuario() {
+        return codigoUsuario;
+    }
+
+    /**
+     * @param codigoUsuario the nombreUsuario to set
+     */
+    public void setCodigoUsuario(String codigoUsuario) {
+        this.codigoUsuario = codigoUsuario;
+    }
+
+    /**
+     * @return the usuarioExiste
+     */
+    public boolean isUsuarioExiste() {
+        return usuarioExiste;
+    }
+
+    /**
+     * @param usuarioExiste the usuarioExiste to set
+     */
+    public void setUsuarioExiste(boolean usuarioExiste) {
+        this.usuarioExiste = usuarioExiste;
+    }
+
+    /**
+     * @return the listaPrestamoActuales
+     */
+    public List<PrestamoUsuario> getListaPrestamoActuales() {
+        return listaPrestamoActuales;
+    }
+
+    /**
+     * @param listaPrestamoActuales the listaPrestamoActuales to set
+     */
+    public void setListaPrestamoActuales(List<PrestamoUsuario> listaPrestamoActuales) {
+        this.listaPrestamoActuales = listaPrestamoActuales;
+    }
+
+    /**
+     * @return the listaPrestamoBasicoActuales
+     */
+    public List<PrestamoBasicoUsuario> getListaPrestamoBasicoActuales() {
+        return listaPrestamoBasicoActuales;
+    }
+
+    /**
+     * @param listaPrestamoBasicoActuales the listaPrestamoBasicoActuales to set
+     */
+    public void setListaPrestamoBasicoActuales(List<PrestamoBasicoUsuario> listaPrestamoBasicoActuales) {
+        this.listaPrestamoBasicoActuales = listaPrestamoBasicoActuales;
     }
 
     
