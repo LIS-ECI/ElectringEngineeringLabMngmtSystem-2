@@ -45,6 +45,17 @@ public class ServiciosConsultarFichaBean implements Serializable{
         
     
     /**
+     * me dice si esta asegurado o no
+     */
+    public String demeloTodo(){
+        if (modeloAsociado!=null){
+            if(modeloAsociado.getSeguro()){return "SI";}
+            else{return "NO";}
+        }
+        else{return "";}
+    }
+    
+    /**
      * consulta la informacion de la ficha que lleva el equipo correspondiente al serial ingresado por el ususario
      */
     public void accionConsultarFicha(){

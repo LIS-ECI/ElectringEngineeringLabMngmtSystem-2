@@ -55,36 +55,165 @@
                         <br/>
                         <p:commandButton value ="Enviar" actionListener="#{ConsultarFicha.accionConsultarFicha()}" update="panelFicha" id="botonEnviar"/>
                         <p:separator/>
-                        <p:panel visible="#{ConsultarFicha.equipoexiste}" id="panelFicha">
-                        <p:dataTable id="ficha" value=""
-                                     style="margin-bottom:20px">
+                        <p:commandButton value="Imprimir" type="button" icon="ui-icon-print" style="display:block;margin-bottom: 20px">
+                            <p:printer target="panelFicha" />
+                        </p:commandButton>  
+                        <p:panel visible="#{ConsultarFicha.equipoexiste}" id="panelFicha">    
+                            <p:dataTable id="ficha" value=""
+                                     style="margin-bottom:20px;align-content: center;text-align: center">
                             <f:facet name="header">
-                                <h:commandLink>
-                                <p:graphicImage name="/demo/images/excel.png" width="24"/>
-                                <p:dataExporter type="xls" target="ficha" fileName="fichaDeEquipoConPlaca #{ConsultarFicha.placaAconsultar}" />
-                                </h:commandLink>
+                                Ficha de equipo con placa: #{ConsultarFicha.placaAconsultar}
                             </f:facet>
                             
                             <p:column>
                                 <f:facet name="header">
-                                    <h:outputText value="Serial" />
+                                    <h:outputText value="Ubicación" />
                                 </f:facet>
-                                <h:outputText value="#{ConsultarFicha.equiposeleccionado.serial}" />
+                                <h:outputText value="#{ConsultarFicha.equiposeleccionado.subEstado}" />
                             </p:column>
                             
                             <p:column>
                                 <f:facet name="header">
-                                    <h:outputText value="Placa" />
-                                </f:facet>
-                                <h:outputText value="#{ConsultarFicha.equiposeleccionado.placa}" />
-                            </p:column>
-                            
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Nombre" />
+                                    <h:outputText value="Nombre del equipo" />
                                 </f:facet>
                                 <h:outputText value="#{ConsultarFicha.equiposeleccionado.nombre}" />
                             </p:column>
+                            
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Marca" />
+                                </f:facet>
+                                <h:outputText value="#{ConsultarFicha.equiposeleccionado.marca}" />
+                            </p:column>
+                                
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Refer. o serial" />
+                                </f:facet>
+                                <h:outputText value="#{ConsultarFicha.equiposeleccionado.serial}" />
+                            </p:column>
+                                
+                           <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Referencia interna lab" />
+                                </f:facet>
+                                <h:outputText value="#{ConsultarFicha.equiposeleccionado.placa}" />
+                            </p:column>
+                            </p:dataTable>  
+                                
+                            <p:dataTable id="ficha1" value=""
+                                     style="margin-bottom:20px;align-content: center;text-align: center">
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Estado" />
+                                </f:facet>
+                                <h:outputText value="#{ConsultarFicha.equiposeleccionado.estado}" />
+                            </p:column>
+                                
+                           <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Accesorios" />
+                                </f:facet>
+                                <h:outputText value="" />
+                            </p:column>
+                                
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Descripción del equipo" />
+                                </f:facet>
+                                <h:outputText value="#{ConsultarFicha.equiposeleccionado.descripcion}" />
+                            </p:column>
+                                
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Fecha de adquisición" />
+                                </f:facet>
+                                <h:outputText value="" />
+                            </p:column>
+                                
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Fecha límite de garantía" />
+                                </f:facet>
+                                <h:outputText value="" />
+                            </p:column>    
+                                
+                            </p:dataTable>
+                            
+                            <p:dataTable id="ficha2" value=""
+                                    style="margin-bottom:20px;align-content: center;text-align: center">
+                          
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Proveedor" />
+                                </f:facet>
+                                <h:outputText value="#{ConsultarFicha.equiposeleccionado.proveedor}" />
+                            </p:column>
+                                
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Orden de compra" />
+                                </f:facet>
+                                <h:outputText value="" />
+                            </p:column>
+                                
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Valor" />
+                                </f:facet>
+                                <h:outputText value="#{ConsultarFicha.modeloAsociado.valorComercial}" />
+                            </p:column>
+                            
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Código de activo" />
+                                </f:facet>
+                                <h:outputText value="" />
+                            </p:column>
+                                
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Asegurado" />
+                                </f:facet>
+                                <h:outputText value="#{ConsultarFicha.demeloTodo()}" />
+                            </p:column>
+                            
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Categoria" />
+                                </f:facet>
+                                <h:outputText value="#{ConsultarFicha.modeloAsociado.nombre}"/>
+                            </p:column>
+                                
+                        </p:dataTable>
+                            
+                        <p:dataTable id="ficha3" var="hi" value="#{ConsultarFicha.equiposeleccionado.prestamos}" style="margin-bottom:20px;align-content: center;text-align: center">
+                            <p:columnGroup type="header">
+                                <p:row>
+                                    <p:column colspan="4" headerText="Historial" />
+                                </p:row>
+                                <p:row>     
+                                    <p:column headerText="Usuario" />
+                                    <p:column headerText="Fecha de expedición" />
+                                    <p:column headerText="Fecha de entrega" />
+                                    <p:column headerText="Tipo de prestamo" />
+                                </p:row>
+                            </p:columnGroup>
+                            
+                            <p:subTable var="hi" value="#{ConsultarFicha.equiposeleccionado.prestamos}">
+                                <p:column>
+                                    <h:outputText value="#{hi.usuario_id}" />
+                                </p:column>
+                                <p:column>
+                                    <h:outputText value="#{hi.fechaExpedicion}" />
+                                </p:column>
+                                <p:column>
+                                    <h:outputText value="#{hi.fechaVencimiento}" />
+                                </p:column>
+                                <p:column>
+                                    <h:outputText value="#{hi.tipoPrestamo}" />
+                                </p:column>
+                            </p:subTable>
                         </p:dataTable>
                         </p:panel>
                         </h:form>
