@@ -16,6 +16,8 @@ public class PrestamoEquipo {
     private int usuario_id;
     private Date fechaExpedicion;
     private Date fechaVencimiento;
+    private String fechaExpedicionString;
+    private String fechaVencimientoString;
     private String tipoPrestamo;
     
     /**
@@ -97,4 +99,32 @@ public class PrestamoEquipo {
     public String toString() {
         return "("+usuario_id+","+fechaExpedicion+","+fechaVencimiento+","+tipoPrestamo+")";
     } 
+
+    /**
+     * @return the fechaExpedicionString
+     */
+    public String getFechaExpedicionString() {
+        return fechaExpedicionString;
+    }
+
+    /**
+     * @param fechaExpedicionString the fechaExpedicionString to set
+     */
+    public void setFechaExpedicionString(String fechaExpedicionString) {
+        this.fechaExpedicionString = fechaExpedicionString;
+    }
+
+    /**
+     * @return the fechaVencimientoString
+     */
+    public String getFechaVencimientoString() {
+        return fechaVencimientoString;
+    }
+
+    /**
+     * @param fechaVencimientoString the fechaVencimientoString to set
+     */
+    public void setFechaVencimientoString(String fechaVencimientoString) {
+        this.fechaVencimientoString = fechaVencimientoString;
+    }
 }

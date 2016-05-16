@@ -6,7 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:head>
-         <title>registrar una devolucion</title>
+         <title>consultar la ficha de un equipo</title>
     </h:head>
     
     <h:body> 
@@ -53,11 +53,11 @@
                                 <h:inputText value="#{ConsultarFicha.placaAconsultar}" />
                             </p:panelGrid>
                         <br/>
-                        <p:commandButton value ="Enviar" actionListener="#{ConsultarFicha.accionConsultarFicha()}" update="panelFicha" id="botonEnviar"/>
+                        <p:commandButton value ="Enviar" actionListener="#{ConsultarFicha.accionConsultarFicha()}" update="panelPrint" id="botonEnviar"/>
+                        
                         <p:separator/>
-                        <p:commandButton value="Imprimir" type="button" icon="ui-icon-print" style="display:block;margin-bottom: 20px">
-                            <p:printer target="panelFicha" />
-                        </p:commandButton>  
+                        
+                        <p:panel visible="#{ConsultarFicha.equipoexiste}" id="panelPrint" update="panelFicha">     
                         <p:panel visible="#{ConsultarFicha.equipoexiste}" id="panelFicha">    
                             <p:dataTable id="ficha" value=""
                                      style="margin-bottom:20px;align-content: center;text-align: center">
@@ -205,16 +205,21 @@
                                     <h:outputText value="#{hi.usuario_id}" />
                                 </p:column>
                                 <p:column>
-                                    <h:outputText value="#{hi.fechaExpedicion}" />
+                                    <h:outputText value="#{hi.fechaExpedicionString}" />
                                 </p:column>
                                 <p:column>
-                                    <h:outputText value="#{hi.fechaVencimiento}" />
+                                    <h:outputText value="#{hi.fechaVencimientoString}" />
                                 </p:column>
                                 <p:column>
                                     <h:outputText value="#{hi.tipoPrestamo}" />
                                 </p:column>
                             </p:subTable>
                         </p:dataTable>
+                        </p:panel>
+                            <br/>
+                        <p:commandButton value="Imprimir" type="button" icon="ui-icon-print" style="display:block;margin-bottom: 20px">
+                            <p:printer target="panelFicha" />
+                        </p:commandButton>     
                         </p:panel>
                         </h:form>
                         </p:panel>
