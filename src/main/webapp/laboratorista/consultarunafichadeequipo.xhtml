@@ -53,11 +53,44 @@
                                 <h:inputText value="#{ConsultarFicha.placaAconsultar}" />
                             </p:panelGrid>
                         <br/>
-                        <p:commandButton value ="Enviar" actionListener="#{ConsultarFicha.accionConsultarFicha}" update="" id="botonEnviar"/>
+                        <p:commandButton value ="Enviar" actionListener="#{ConsultarFicha.accionConsultarFicha()}" update="panelFicha" id="botonEnviar"/>
+                        <p:separator/>
+                        <p:panel visible="#{ConsultarFicha.equipoexiste}" id="panelFicha">
+                        <p:dataTable id="ficha" value=""
+                                     style="margin-bottom:20px">
+                            <f:facet name="header">
+                                <h:commandLink>
+                                <p:graphicImage name="/demo/images/excel.png" width="24"/>
+                                <p:dataExporter type="xls" target="ficha" fileName="fichaDeEquipoConPlaca #{ConsultarFicha.placaAconsultar}" />
+                                </h:commandLink>
+                            </f:facet>
+                            
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Serial" />
+                                </f:facet>
+                                <h:outputText value="#{ConsultarFicha.equiposeleccionado.serial}" />
+                            </p:column>
+                            
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Placa" />
+                                </f:facet>
+                                <h:outputText value="#{ConsultarFicha.equiposeleccionado.placa}" />
+                            </p:column>
+                            
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Nombre" />
+                                </f:facet>
+                                <h:outputText value="#{ConsultarFicha.equiposeleccionado.nombre}" />
+                            </p:column>
+                        </p:dataTable>
+                        </p:panel>
                         </h:form>
-                        </p:panel>                       
+                        </p:panel>
                     </p:layoutUnit>
-                    </p:layout>
+                </p:layout>
         </h:form>
     </h:body>
 </html>

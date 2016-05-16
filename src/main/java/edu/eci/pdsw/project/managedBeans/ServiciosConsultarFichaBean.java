@@ -9,6 +9,9 @@ import edu.eci.pdsw.entities.Equipo;
 import edu.eci.pdsw.entities.Modelo;
 import edu.eci.pdsw.services.Services;
 import edu.eci.pdsw.services.ServicesException;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -21,27 +24,23 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean(name="ConsultarFicha")
 @SessionScoped
-public class ServiciosConsultarFichaBean {
+public class ServiciosConsultarFichaBean implements Serializable{
     
     @ManagedProperty(value = "#{loginBean}")    
     private ShiroLoginBean loginBean;  
-    private Services services;
-    private String placaAconsultar;
-    private Equipo equiposeleccionado;
-    private Modelo modeloAsociado;
+    private Services services=Services.getInstance("applicationconfig.properties");
+    private String placaAconsultar=null;
+    private Equipo equiposeleccionado=null;
+    private Modelo modeloAsociado=null;
+    private Boolean equipoexiste=false;
     
-    public ServiciosConsultarFichaBean() {
-        services = Services.getInstance("applicationconfig.properties");;
-        placaAconsultar="";
-        equiposeleccionado=null;
-        modeloAsociado=null;
-    }
     
     public void limpiarPaginaConsultarFicha(){
-        services = Services.getInstance("applicationconfig.properties");;
-        placaAconsultar="";
+        services = Services.getInstance("applicationconfig.properties");
+        placaAconsultar=null;
         equiposeleccionado=null;
         modeloAsociado=null;
+        setEquipoexiste((Boolean) false);
     }
         
     
@@ -52,14 +51,13 @@ public class ServiciosConsultarFichaBean {
         try {
             equiposeleccionado = services.loadEquipoByPlaca(Integer.parseInt(placaAconsultar));
             modeloAsociado = services.loadModeloByName(services.loadNameModeloByPlaca(Integer.parseInt(placaAconsultar)));
-                    
-            //System.out.println(equiposeleccionado);
-            //System.out.println(modeloAsociado);
-            
+            setEquipoexiste((Boolean) true);
         } catch (ServicesException e) {
+            setEquipoexiste((Boolean) false);
             FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error",e.getLocalizedMessage()));
         }
         catch(NumberFormatException e){
+            setEquipoexiste((Boolean) false);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Error", "La placa "+placaAconsultar+" no esta permitida, debe ser un numero positivo"));
         }
         
@@ -135,5 +133,18 @@ public class ServiciosConsultarFichaBean {
         this.modeloAsociado = modeloAsociado;
     }
 
-    
+    /**
+     * @return the equipoexiste
+     */
+    public Boolean getEquipoexiste() {
+        return equipoexiste;
+    }
+
+    /**
+     * @param equipoexiste the equipoexiste to set
+     */
+    public void setEquipoexiste(Boolean equipoexiste) {
+        this.equipoexiste = equipoexiste;
+    }
+
 }
