@@ -225,7 +225,7 @@ public class ServiciosDevolucionesBean implements Serializable{
      * a "Activo" y el subestado a "En almacén"
      */
     public void accionRealizarDevolucion() {
-        //la fecha actual entrega año,mes y dia pero no minutos ni segundos.
+        //la fecha actual entrega anho,mes y dia pero no minutos ni segundos.
         try{
             Set<PrestamoUsuario> prestamos = usuarioDevolucion.getPrestamos();
             for (PrestamoUsuario p : prestamos) {

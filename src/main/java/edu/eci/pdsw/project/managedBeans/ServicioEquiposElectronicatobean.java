@@ -778,14 +778,14 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     /**
      * @return nombreEquipoBasico 
      */
-    public String getnombreEquipoBásico(){
+    public String getnombreEquipoBasico(){
         return "  ";
     }
     
     /**
-     * @param nombrembreEquipoBasico the nombreEquipoBásico to set
+     * @param nombrembreEquipoBasico the nombreEquipoBasico to set
      */
-    public void setnombreEquipoBásico(String nombre){
+    public void setnombreEquipoBasico(String nombre){
         this.nombreEquipoBasico = nombre;
     }
 
