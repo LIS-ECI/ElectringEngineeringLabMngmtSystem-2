@@ -7,6 +7,8 @@ package edu.eci.pdsw.services;
 
 import edu.eci.pdsw.entities.Equipo;
 import edu.eci.pdsw.entities.EquipoBasico;
+import edu.eci.pdsw.entities.EquipoBasicoPrestamo;
+import edu.eci.pdsw.entities.EquipoPrestamo;
 import edu.eci.pdsw.entities.Modelo;
 import edu.eci.pdsw.entities.PrestamoBasicoEquipo;
 import edu.eci.pdsw.entities.PrestamoBasicoUsuario;
@@ -16,6 +18,8 @@ import edu.eci.pdsw.persistence.DaoFactory;
 import edu.eci.pdsw.entities.Usuario;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 import javax.persistence.PersistenceException;
@@ -407,6 +411,48 @@ public class Services {
         try{
             df.beginSession();
             ans=df.getDaoEquipo().loadNameModeloByPlaca(placa);
+        }catch(PersistenceException e){
+            throw new ServicesException(e,e.getLocalizedMessage());
+        }finally{
+           df.endSession();  
+        }
+        return ans;
+    }
+
+    public List<EquipoPrestamo> loadPrestamosByUsuario(int usuario) throws ServicesException {
+        DaoFactory df=DaoFactory.getInstance(properties);
+        List<EquipoPrestamo> ans= new ArrayList<EquipoPrestamo>();
+        Set<PrestamoUsuario> pres=null;
+        try{
+            df.beginSession();
+            pres = df.getDaoPrestamo().loadPrestamosByUsuario(usuario);
+            for (PrestamoUsuario p:pres){    
+                if (p.getFechaVencimiento()==null){
+                    Equipo e =df.getDaoEquipo().loadEquipoBySerial(p.getEquipo_serial());
+                    ans.add(new EquipoPrestamo(e,p.getTipoPrestamo()));
+                } 
+            }
+        }catch(PersistenceException e){
+            throw new ServicesException(e,e.getLocalizedMessage());
+        }finally{
+           df.endSession();  
+        }
+        return ans;
+    }
+
+    public List<EquipoBasicoPrestamo> loadPrestamosBasicosByUsuario(int usuario) throws ServicesException {
+        DaoFactory df=DaoFactory.getInstance(properties);
+        List<EquipoBasicoPrestamo> ans= new ArrayList<EquipoBasicoPrestamo>();
+        Set<PrestamoBasicoUsuario> pres=null;
+        try{
+            df.beginSession();
+            pres = df.getDaoPrestamo().loadPrestamosBasicosByUsuario(usuario);
+            for(PrestamoBasicoUsuario p:pres){
+                if(p.getFechaVencimiento()==null){
+                    EquipoBasico e = df.getDaoEquipo().loadEquipoBasicoByName(p.getEquipoBasico_nombre());
+                    ans.add(new EquipoBasicoPrestamo(e,p.getCantidadPrestada(),p.getTipoPrestamo()));
+                }  
+            }
         }catch(PersistenceException e){
             throw new ServicesException(e,e.getLocalizedMessage());
         }finally{

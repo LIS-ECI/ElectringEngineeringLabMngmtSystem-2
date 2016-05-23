@@ -5,11 +5,14 @@
  */
 package edu.eci.pdsw.persistence;
 
+import edu.eci.pdsw.entities.EquipoPrestamo;
 import edu.eci.pdsw.entities.Modelo;
 import edu.eci.pdsw.entities.PrestamoBasicoEquipo;
 import edu.eci.pdsw.entities.PrestamoBasicoUsuario;
 import edu.eci.pdsw.entities.PrestamoEquipo;
 import edu.eci.pdsw.entities.PrestamoUsuario;
+import java.util.List;
+import java.util.Set;
 import javax.persistence.PersistenceException;
 
 /**
@@ -30,5 +33,9 @@ public interface DaoPrestamo {
      * @param pbu , el prestamoBasicoUsuario a registrar en la bd
      */
     public void registrarNuevoPrestamoBasico(PrestamoBasicoEquipo pbe, PrestamoBasicoUsuario pbu);
+
+    public Set<PrestamoUsuario> loadPrestamosByUsuario(int usuario);
+
+    public Set<PrestamoBasicoUsuario> loadPrestamosBasicosByUsuario(int usuario);
     
 }

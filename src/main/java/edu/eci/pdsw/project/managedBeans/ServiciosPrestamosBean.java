@@ -56,7 +56,9 @@ public class ServiciosPrestamosBean implements Serializable{
     private String tipoPrestamoSeleccionado;
     private List<String> nombresTipoPrestamo;
     private List<EquipoPrestamo> listaEquipos;
+    private List<EquipoPrestamo> listaEquiposOne;
     private List<EquipoBasicoPrestamo> listaEquiposBasicos;
+    private List<EquipoBasicoPrestamo> listaEquiposBasicosOne;
     private EquipoPrestamo equipoSeleccionado;
     private EquipoBasicoPrestamo prestamoEquipoBasicoSeleccionado;
     private int cantidadEquipoBasicoSeleccionada=1;
@@ -69,6 +71,8 @@ public class ServiciosPrestamosBean implements Serializable{
         prestamoEquipoBasicoSeleccionado=null;
         listaEquipos= new ArrayList<EquipoPrestamo>();
         listaEquiposBasicos= new ArrayList<EquipoBasicoPrestamo>();
+        listaEquiposOne= new ArrayList<EquipoPrestamo>();
+        listaEquiposBasicosOne= new ArrayList<EquipoBasicoPrestamo>();
         nombresTipoPrestamo=new ArrayList<String>();
         setEstudianteExiste(false);
         usuarioSeleccionado=null;
@@ -83,31 +87,34 @@ public class ServiciosPrestamosBean implements Serializable{
     }
     
     public void accionCompletarPrestamo(){
-        if(listaEquipos.size()>0 || listaEquiposBasicos.size()>0){
-            for(int i=0;i<listaEquipos.size();i++){
-                PrestamoEquipo pe=new PrestamoEquipo(Integer.parseInt(codigoUsuarioPrestamo),new java.sql.Date(Calendar.getInstance().getTime().getTime()),null,listaEquipos.get(i).getTipoPrestamo());
-                PrestamoUsuario pu=new PrestamoUsuario(listaEquipos.get(i).getEquipoBasico().getSerial(),new java.sql.Date(Calendar.getInstance().getTime().getTime()),null,listaEquipos.get(i).getTipoPrestamo());
+        listaEquiposOne=getListaEquiposOne();
+        listaEquiposBasicosOne=getListaEquiposBasicosOne();
+        if(listaEquiposOne.size()>0 || listaEquiposBasicosOne.size()>0){
+            for(int i=0;i<listaEquiposOne.size();i++){
+                PrestamoEquipo pe=new PrestamoEquipo(Integer.parseInt(codigoUsuarioPrestamo),new java.sql.Date(Calendar.getInstance().getTime().getTime()),null,listaEquiposOne.get(i).getTipoPrestamo());
+                PrestamoUsuario pu=new PrestamoUsuario(listaEquiposOne.get(i).getEquipoBasico().getSerial(),new java.sql.Date(Calendar.getInstance().getTime().getTime()),null,listaEquiposOne.get(i).getTipoPrestamo());
                 try {
                     services.registrarNuevoPrestamo(pe,pu);
-                    services.updateEstadoEquipo(Integer.toString(listaEquipos.get(i).getEquipoBasico().getSerial()),listaEquipos.get(i).getTipoPrestamo());
+                    services.updateEstadoEquipo(Integer.toString(listaEquiposOne.get(i).getEquipoBasico().getSerial()),listaEquiposOne.get(i).getTipoPrestamo());
                 } catch (ServicesException ex) {
                     FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error",ex.getMessage()));
                 }
                 
             }
-            for(int j=0;j<listaEquiposBasicos.size();j++){
-                PrestamoBasicoEquipo pbe=new PrestamoBasicoEquipo(Integer.parseInt(codigoUsuarioPrestamo),new java.sql.Date(Calendar.getInstance().getTime().getTime()),null,listaEquiposBasicos.get(j).getTipoPrestamo(), listaEquiposBasicos.get(j).getCantidad());
-                PrestamoBasicoUsuario pbu=new PrestamoBasicoUsuario(listaEquiposBasicos.get(j).getEquipoBasico().getNombre(),new java.sql.Date(Calendar.getInstance().getTime().getTime()),null,listaEquiposBasicos.get(j).getTipoPrestamo(), listaEquiposBasicos.get(j).getCantidad());
+            for(int j=0;j<listaEquiposBasicosOne.size();j++){
+                PrestamoBasicoEquipo pbe=new PrestamoBasicoEquipo(Integer.parseInt(codigoUsuarioPrestamo),new java.sql.Date(Calendar.getInstance().getTime().getTime()),null,listaEquiposBasicosOne.get(j).getTipoPrestamo(), listaEquiposBasicosOne.get(j).getCantidad());
+                PrestamoBasicoUsuario pbu=new PrestamoBasicoUsuario(listaEquiposBasicosOne.get(j).getEquipoBasico().getNombre(),new java.sql.Date(Calendar.getInstance().getTime().getTime()),null,listaEquiposBasicosOne.get(j).getTipoPrestamo(), listaEquiposBasicosOne.get(j).getCantidad());
                 try {
                     services.registrarNuevoPrestamoBasico(pbe,pbu);
-                    services.updateCantidadEquipoBasico(listaEquiposBasicos.get(j).getEquipoBasico().getNombre(),listaEquiposBasicos.get(j).getCantidad());
+                    services.updateCantidadEquipoBasico(listaEquiposBasicosOne.get(j).getEquipoBasico().getNombre(),listaEquiposBasicosOne.get(j).getCantidad());
                 } catch (ServicesException ex) {
                     FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error",ex.getMessage()));
                 }
                 
             }
-            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Succes","Se han registrado todos los préstamos con éxito"));
             limpiarPaginaRegistrarUnPrestamo();
+            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Succes","Se han registrado todos los préstamos con éxito"));
+            
             
         }
         else{
@@ -124,9 +131,11 @@ public class ServiciosPrestamosBean implements Serializable{
            
            Equipo nuevo=services.loadEquipoBySerial(Integer.parseInt(codigoEquipo));
            if(nuevo.getSubEstado().equals("En almacén")){
-            listaEquipos=getListaEquipos();
             EquipoPrestamo aMeter=new EquipoPrestamo(nuevo, getTipoPrestamoSeleccionadoDos());
-            listaEquipos.add(aMeter);  
+            listaEquipos=getListaEquipos();
+            listaEquipos.add(aMeter); 
+            listaEquiposOne=getListaEquiposOne();
+            listaEquiposOne.add(aMeter);
             FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Succes","Se ha agregado el préstamo a la lista de equipos codificados con éxito"));    
            }
            else{
@@ -150,6 +159,8 @@ public class ServiciosPrestamosBean implements Serializable{
                 EquipoBasicoPrestamo aMeter=new EquipoBasicoPrestamo(nuevo,cantidadEquipoBasicoSeleccionada,tipoPrestamoSeleccionado);
                 listaEquiposBasicos=getListaEquiposBasicos();
                 listaEquiposBasicos.add(aMeter);
+                listaEquiposBasicosOne=getListaEquiposBasicosOne();
+                listaEquiposBasicosOne.add(aMeter);
                 FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Succes","Se ha agregado el préstamo a la lista de equipos no codificados con éxito"));    
             }
             else if(cantidadEquipoBasicoSeleccionada<=0){
@@ -202,6 +213,8 @@ public class ServiciosPrestamosBean implements Serializable{
                 rolesUsuarioSeleccionado=roles.substring(0,roles.length()-2);
             }
             estudianteExiste=true;
+            listaEquiposBasicos=services.loadPrestamosBasicosByUsuario(Integer.parseInt(codigoUsuarioPrestamo));
+            listaEquipos=services.loadPrestamosByUsuario(Integer.parseInt(codigoUsuarioPrestamo));
         } 
         catch (ServicesException ex) {
             estudianteExiste=false;
@@ -400,6 +413,16 @@ public class ServiciosPrestamosBean implements Serializable{
         }
         return listaEquipos;
     }
+    
+    /**
+     * @return the listaEquipos1
+     */
+    public List<EquipoPrestamo> getListaEquiposOne() {
+        if(listaEquiposOne==null){
+            listaEquiposOne=new ArrayList<EquipoPrestamo>();
+        }
+        return listaEquiposOne;
+    }
 
     /**
      * @param listaEquipos the listaEquipos to set
@@ -408,6 +431,13 @@ public class ServiciosPrestamosBean implements Serializable{
         this.listaEquipos = listaEquipos;
     }
 
+    /**
+     * @param listaEquipos| the listaEquipos to set
+     */
+    public void setListaEquiposOne(List<EquipoPrestamo> listaEquiposOne) {
+        this.listaEquiposOne = listaEquiposOne;
+    }
+    
     /**
      * @return the listaEquiposBasicos
      */
@@ -425,6 +455,23 @@ public class ServiciosPrestamosBean implements Serializable{
         this.listaEquiposBasicos = listaEquiposBasicos;
     }
 
+    /**
+     * @return the listaEquiposBasicos1
+     */
+    public List<EquipoBasicoPrestamo> getListaEquiposBasicosOne() {
+        if(listaEquiposBasicosOne==null){
+            listaEquiposBasicosOne=new ArrayList<EquipoBasicoPrestamo>();
+        }
+        return listaEquiposBasicosOne;
+    }
+
+    /**
+     * @param listaEquiposBasicos1 the listaEquiposBasicos to set
+     */
+    public void setListaEquiposBasicosOne(List<EquipoBasicoPrestamo> listaEquiposBasicosOne) {
+        this.listaEquiposBasicosOne = listaEquiposBasicosOne;
+    }
+    
     /**
      * @return the equipoSeleccionado
      */

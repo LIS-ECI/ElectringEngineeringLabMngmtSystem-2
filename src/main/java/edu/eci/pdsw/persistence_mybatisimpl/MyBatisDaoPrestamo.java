@@ -5,6 +5,7 @@
  */
 package edu.eci.pdsw.persistence_mybatisimpl;
 
+import edu.eci.pdsw.entities.EquipoPrestamo;
 import edu.eci.pdsw.entities.PrestamoBasicoEquipo;
 import edu.eci.pdsw.entities.PrestamoBasicoUsuario;
 import edu.eci.pdsw.entities.PrestamoEquipo;
@@ -12,6 +13,8 @@ import edu.eci.pdsw.entities.PrestamoUsuario;
 import edu.eci.pdsw.mybatis.mappers.EquipoMapper;
 import edu.eci.pdsw.persistence.DaoPrestamo;
 import java.util.Calendar;
+import java.util.List;
+import java.util.Set;
 import javax.persistence.PersistenceException;
 import org.apache.ibatis.session.SqlSession;
 
@@ -62,6 +65,28 @@ public class MyBatisDaoPrestamo implements DaoPrestamo{
             throw new PersistenceException("El equipo con nombre "+pbu.getEquipoBasico_nombre()+" se encuentra registrado en la base de datos, pero lo maximo que puede prestar son "+emap.loadEquipoBasicoByName(pbu.getEquipoBasico_nombre()).getCantidadInventario());
         }
         emap.registrarNuevoPrestamoBasico(pbe,pbu);
+    }
+
+    @Override
+    public Set<PrestamoUsuario> loadPrestamosByUsuario(int usuario) {
+        if (emap.loadUsuarioById(usuario)==null){
+            throw new PersistenceException("El usuario no existe");   
+        }
+        else{
+            Set<PrestamoUsuario> ans = emap.loadPrestamosByUsuario(usuario);
+            return ans;
+        }
+    }
+
+    @Override
+    public Set<PrestamoBasicoUsuario> loadPrestamosBasicosByUsuario(int usuario) {
+        if (emap.loadUsuarioById(usuario)==null){
+            throw new PersistenceException("El usuario no existe");   
+        }
+        else{
+            Set<PrestamoBasicoUsuario> ans = emap.loadPrestamosBasicosByUsuario(usuario);
+            return ans;
+        }
     }
     
 }

@@ -18,12 +18,14 @@
 package edu.eci.pdsw.mybatis.mappers;
 import edu.eci.pdsw.entities.Equipo;
 import edu.eci.pdsw.entities.EquipoBasico;
+import edu.eci.pdsw.entities.EquipoPrestamo;
 import edu.eci.pdsw.entities.Modelo;
 import edu.eci.pdsw.entities.PrestamoBasicoEquipo;
 import edu.eci.pdsw.entities.PrestamoBasicoUsuario;
 import edu.eci.pdsw.entities.PrestamoEquipo;
 import edu.eci.pdsw.entities.PrestamoUsuario;
 import edu.eci.pdsw.entities.Usuario;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.PersistenceException;
 import org.apache.ibatis.annotations.Param;
@@ -180,4 +182,18 @@ public interface EquipoMapper {
      * @return 
      */
     public String loadNameModeloByPlaca(@Param("placaequipo")int placa);
+    
+    /**
+     * 
+     * @param usuario
+     * @return 
+     */
+    public Set<PrestamoUsuario> loadPrestamosByUsuario(@Param("usuario")int usuario);
+    
+    /**
+     * 
+     * @param usuario
+     * @return 
+     */
+    public Set<PrestamoBasicoUsuario> loadPrestamosBasicosByUsuario(@Param("usuario")int usuario);
 }
