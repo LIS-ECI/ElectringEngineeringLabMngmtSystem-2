@@ -183,7 +183,7 @@
     </update>
     
     <insert id="registrarNuevoPrestamo">
-        INSERT INTO PRESTAMOS(USUARIOS_id,EQUIPOS_serial,fechaExpedicion,fechaVencimiento,tipoPrestamo) values (#{pe.usuario_id},#{pu.equipo_serial},#{pu.fechaExpedicion},#{pu.fechaVencimiento},#{pu.tipoPrestamo})
+        INSERT INTO PRESTAMOS(USUARIOS_id,EQUIPOS_serial,fechaExpedicion,fechaVencimiento,tipoPrestamo) values (#{pe.usuario_id},#{pu.equipo_serial},SYSDATE() + INTERVAL 15 MINUTE,#{pu.fechaVencimiento},#{pu.tipoPrestamo})
     </insert>
     
     <update id = "updateEstadoEquipo" >
@@ -193,7 +193,7 @@
     </update>
     
     <insert id="registrarNuevoPrestamoBasico">
-        INSERT INTO PRESTAMOS_BASICOS(USUARIOS_id,EQUIPOS_BASICOS_nombre,fechaExpedicion,fechaVencimiento,tipoPrestamo,cantidadPrestada) values (#{pbe.usuario_id},#{pbu.equipoBasico_nombre},#{pbu.fechaExpedicion},#{pbu.fechaVencimiento},#{pbu.tipoPrestamo},#{pbu.cantidadPrestada})
+        INSERT INTO PRESTAMOS_BASICOS(USUARIOS_id,EQUIPOS_BASICOS_nombre,fechaExpedicion,fechaVencimiento,tipoPrestamo,cantidadPrestada) values (#{pbe.usuario_id},#{pbu.equipoBasico_nombre},SYSDATE() + INTERVAL 15 MINUTE,#{pbu.fechaVencimiento},#{pbu.tipoPrestamo},#{pbu.cantidadPrestada})
     </insert>
     
     <update id = "updateCantidadEquipoBasico" >
