@@ -55,7 +55,9 @@
     <resultMap type='PrestamoEquipo' id='PrestamoEquipoResult'>
         <result property='usuario_id' column='usuario_id'/>
         <result property='fechaExpedicion' column='fechaExpedicion'/>
-        <result property='fechaVencimiento' column='fechaVencimiento'/>      
+        <result property='fechaVencimiento' column='fechaVencimiento'/> 
+        <result property='fechaExpedicionString' column='fechaExpedicion'/>		
+        <result property='fechaVencimientoString' column='fechaVencimiento'/>          
         <result property='tipoPrestamo' column='tipoPrestamo'/>
     </resultMap>
      <!--- Para equipo basico-->
